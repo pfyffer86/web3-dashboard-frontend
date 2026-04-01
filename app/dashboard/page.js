@@ -8,17 +8,33 @@ export default function DashboardPage() {
 
   useEffect(() => {
 
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token")
 
-    fetch("https://apertum-dashboard-production.up.railway.app/api/dashboard?wallet=0xAdE4b6B348B133452d3a36B803F6c963eae332A9", {
-      headers: {
-        Authorization: "Bearer " + token
+  console.log("TOKEN:", token)
+
+  fetch("https://apertum-dashboard-production.up.railway.app/api/dashboard?wallet=0xAdE4b6B348B133452d3a36B803F6c963eae332A9", {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  })
+    .then(res => {
+      console.log("STATUS:", res.status)
+
+      if (!res.ok) {
+        throw new Error("API error: " + res.status)
       }
-    })
-      .then(res => res.json())
-      .then(setData)
 
-  }, [])
+      return res.json()
+    })
+    .then(data => {
+      console.log("API DATA:", data)
+      setData(data)
+    })
+    .catch(err => {
+      console.error("FETCH ERROR:", err)
+    })
+
+}, [])
 
   if (!data) return <div>Loading...</div>
 
