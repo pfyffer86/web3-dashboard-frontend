@@ -1,44 +1,43 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
 
 export default function DashboardPage() {
 
   const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
 
-  const token = localStorage.getItem("token")
+    async function load() {
 
-  console.log("TOKEN:", token)
+      const { data: sessionData } = await supabase.auth.getSession()
 
-  fetch("https://apertum-dashboard-production.up.railway.app/api/dashboard?wallet=0xAdE4b6B348B133452d3a36B803F6c963eae332A9", {
-    headers: {
-      Authorization: "Bearer " + token
-    }
-  })
-    .then(res => {
-      console.log("STATUS:", res.status)
+      const token = sessionData?.session?.access_token
 
-      if (!res.ok) {
-        throw new Error("API error: " + res.status)
+      if (!token) {
+        console.error("NO TOKEN")
+        return
       }
 
-      return res.json()
-    })
-    .then(data => {
-      console.log("API DATA:", data)
-      setData(data)
-    })
-    .catch(err => {
-      console.error("FETCH ERROR:", err)
-      setError(err.message)
-    })
+      const res = await fetch(
+        "https://apertum-dashboard-production.up.railway.app/api/dashboard?wallet=0xAdE4b6B348B133452d3a36B803F6c963eae332A9",
+        {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        }
+      )
 
-}, [])
+      const json = await res.json()
 
-  if (error) return <div>ERROR: {error}</div>
+      setData(json)
+    }
+
+    load()
+
+  }, [])
+
   if (!data) return <div>Loading...</div>
 
   return (
