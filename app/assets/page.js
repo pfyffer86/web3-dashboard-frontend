@@ -142,7 +142,9 @@ const cardStyle = {
   background: "#111",
   padding: 20,
   borderRadius: 10,
-  flex: 1
+  flex: 1,
+  color: "#fff",
+  border: "1px solid #222"
 }
 
 const thRow = {
