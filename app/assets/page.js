@@ -75,7 +75,7 @@ function KPISection({ totalValue, count }) {
       <Card>
         <div style={styles.kpiLabel}>Total Assets Value</div>
         <div style={styles.kpiValue}>
-          ${totalValue.toFixed(2)}
+          {formatUSD(totalValue)}
         </div>
       </Card>
 
@@ -129,15 +129,15 @@ function AssetsTable({ tokens, totalValue }) {
                 <td style={styles.td}>{t.symbol}</td>
 
                 <td style={styles.td}>
-                  {t.amount.toFixed(6)}
+                  {formatAmount(t.amount)}
                 </td>
 
                 <td style={styles.td}>
-                  ${price.toFixed(2)}
+                  {formatUSD(price)}
                 </td>
 
                 <td style={styles.td}>
-                  ${t.value_usd.toFixed(2)}
+                  {formatUSD(t.value_usd)}
                 </td>
 
                <td style={styles.td}>
@@ -205,6 +205,32 @@ function AllocationBar({ value }) {
 
     </div>
   )
+}
+
+/* ================= FORMAT ================= */
+
+function formatUSD(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2
+  }).format(value || 0)
+}
+
+function formatAmount(value) {
+  if (!value) return "0"
+
+  if (value < 0.0001) {
+    return value.toExponential(2)
+  }
+
+  if (value < 1) {
+    return value.toFixed(6)
+  }
+
+  return new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 4
+  }).format(value)
 }
 
 /* ================= STYLES ================= */
