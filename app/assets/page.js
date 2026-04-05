@@ -140,9 +140,9 @@ function AssetsTable({ tokens, totalValue }) {
                   ${t.value_usd.toFixed(2)}
                 </td>
 
-                <td style={styles.td}>
-                  {allocation.toFixed(1)}%
-                </td>
+               <td style={styles.td}>
+                 <AllocationBar value={allocation} />
+               </td>
 
               </tr>
             )
@@ -174,6 +174,35 @@ function WalletPlaceholder() {
       <p style={{ opacity: 0.6 }}>
         kommt im nächsten Schritt (API Erweiterung)
       </p>
+    </div>
+  )
+}
+
+/* ================= Allocation Bar ================= */
+
+function AllocationBar({ value }) {
+
+  return (
+    <div style={{ minWidth: 120 }}>
+
+      <div style={{
+        height: 6,
+        background: "#222",
+        borderRadius: 4,
+        overflow: "hidden",
+        marginBottom: 4
+      }}>
+        <div style={{
+          width: `${value}%`,
+          background: "#4ade80",
+          height: "100%"
+        }} />
+      </div>
+
+      <div style={{ fontSize: 12, opacity: 0.7 }}>
+        {value.toFixed(1)}%
+      </div>
+
     </div>
   )
 }
