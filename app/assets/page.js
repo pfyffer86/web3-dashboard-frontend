@@ -104,15 +104,17 @@ function AssetsTable({ tokens, totalValue }) {
         <thead>
           <tr>
             <th style={styles.th}>Asset</th>
-            <th style={styles.th}>Balance</th>
-            <th style={styles.th}>Price</th>
-            <th style={styles.th}>Value</th>
-            <th style={styles.th}>Allocation</th>
+            <th style={styles.thRight}>Balance</th>
+            <th style={styles.thRight}>Price</th>
+            <th style={styles.thRight}>Value</th>
+            <th style={styles.thRight}>Allocation</th>
           </tr>
         </thead>
 
         <tbody>
-          {tokens.map(t => {
+          {tokens.map((t, index) => {
+
+            const isTop = index === 0
 
             const allocation = totalValue > 0
               ? (t.value_usd / totalValue) * 100
@@ -123,26 +125,38 @@ function AssetsTable({ tokens, totalValue }) {
                 ? t.price
                 : (t.amount > 0 ? t.value_usd / t.amount : 0)
 
+            const rowStyle = {
+              ...styles.tr,
+              background: isTop ? "#161616" : "transparent"
+            }
+
             return (
-              <tr key={t.symbol} style={styles.tr}>
+              <tr
+                key={t.symbol}
+                style={rowStyle}
+                onMouseEnter={e => e.currentTarget.style.background = "#1a1a1a"}
+                onMouseLeave={e => e.currentTarget.style.background = isTop ? "#161616" : "transparent"}
+              >
 
-                <td style={styles.td}>{t.symbol}</td>
+                <td style={styles.assetCell}>
+                  {t.symbol}
+                </td>
 
-                <td style={styles.td}>
+                <td style={styles.tdRight}>
                   {formatAmount(t.amount)}
                 </td>
 
-                <td style={styles.td}>
+                <td style={styles.tdRight}>
                   {formatUSD(price)}
                 </td>
 
-                <td style={styles.td}>
+                <td style={styles.tdRight}>
                   {formatUSD(t.value_usd)}
                 </td>
 
-               <td style={styles.td}>
-                 <AllocationBar value={allocation} />
-               </td>
+                <td style={styles.tdRight}>
+                  <AllocationBar value={allocation} isTop={isTop} />
+                </td>
 
               </tr>
             )
@@ -155,7 +169,7 @@ function AssetsTable({ tokens, totalValue }) {
   )
 }
 
-/* ================= REUSABLE CARD ================= */
+/* ================= CARD ================= */
 
 function Card({ children }) {
   return (
@@ -178,28 +192,22 @@ function WalletPlaceholder() {
   )
 }
 
-/* ================= Allocation Bar ================= */
+/* ================= ALLOCATION ================= */
 
-function AllocationBar({ value }) {
+function AllocationBar({ value, isTop }) {
 
   return (
     <div style={{ minWidth: 120 }}>
 
-      <div style={{
-        height: 6,
-        background: "#222",
-        borderRadius: 4,
-        overflow: "hidden",
-        marginBottom: 4
-      }}>
+      <div style={styles.barBg}>
         <div style={{
           width: `${value}%`,
-          background: "#4ade80",
+          background: isTop ? "#22c55e" : "#4ade80",
           height: "100%"
         }} />
       </div>
 
-      <div style={{ fontSize: 12, opacity: 0.7 }}>
+      <div style={styles.barLabel}>
         {value.toFixed(1)}%
       </div>
 
@@ -272,7 +280,8 @@ const styles = {
   },
 
   table: {
-    width: "100%"
+    width: "100%",
+    borderCollapse: "collapse"
   },
 
   th: {
@@ -282,12 +291,39 @@ const styles = {
     borderBottom: "1px solid #333"
   },
 
-  tr: {
-    borderBottom: "1px solid #222"
+  thRight: {
+    textAlign: "right",
+    padding: 10,
+    opacity: 0.7,
+    borderBottom: "1px solid #333"
   },
 
-  td: {
-    padding: 10
+  tr: {
+    borderBottom: "1px solid #222",
+    transition: "background 0.2s"
+  },
+
+  tdRight: {
+    padding: 10,
+    textAlign: "right"
+  },
+
+  assetCell: {
+    padding: 10,
+    fontWeight: 500
+  },
+
+  barBg: {
+    height: 8,
+    background: "#222",
+    borderRadius: 4,
+    overflow: "hidden",
+    marginBottom: 4
+  },
+
+  barLabel: {
+    fontSize: 12,
+    opacity: 0.7
   }
 
 }
