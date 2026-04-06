@@ -394,7 +394,7 @@ const styles = {
     marginBottom: 4
   },
 
-  barLabel: { fontSize: 12, opacity: 0.7 }
+  barLabel: { fontSize: 12, opacity: 0.7
 },
 
   legend: {
