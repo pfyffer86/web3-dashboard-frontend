@@ -194,7 +194,7 @@ function AssetsTable({ tokens, totalValue }) {
                 <td style={styles.right}>{formatUSD(price)}</td>
                 <td style={styles.right}>{formatUSD(t.value_usd)}</td>
                 <td style={styles.right}>
-                  {allocation.toFixed(1)}%
+                  <AllocationBar value={allocation} />
                 </td>
               </tr>
             )
@@ -295,6 +295,40 @@ function WalletDetail({ wallet }) {
   )
 }
 
+/* ================= COMPONENTS ================= */
+
+function Card({ children }) {
+  return (
+    <div style={styles.card}>
+      {children}
+    </div>
+  )
+}
+
+function AllocationBar({ value }) {
+  return (
+    <div style={{ minWidth: 120 }}>
+      <div style={{
+        height: 8,
+        background: "#222",
+        borderRadius: 4,
+        overflow: "hidden",
+        marginBottom: 4
+      }}>
+        <div style={{
+          width: `${value}%`,
+          background: "#4ade80",
+          height: "100%"
+        }} />
+      </div>
+
+      <div style={{ fontSize: 12, opacity: 0.7 }}>
+        {value.toFixed(1)}%
+      </div>
+    </div>
+  )
+}
+
 /* ================= HELPERS ================= */
 
 function formatUSD(v) {
@@ -318,16 +352,6 @@ function getColor(i, name) {
   if (name === "Others") return "#333"
   const p = ["#22c55e","#3b82f6","#f59e0b","#ef4444","#8b5cf6","#06b6d4"]
   return p[i % p.length]
-}
-
-/* ================= COMPONENT ================= */
-
-function Card({ children }) {
-  return (
-    <div style={styles.card}>
-      {children}
-    </div>
-  )
 }
 
 /* ================= STYLES ================= */
