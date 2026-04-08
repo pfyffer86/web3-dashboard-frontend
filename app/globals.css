@@ -1,15 +1,22 @@
 :root {
-  --bg: #f7f8fa;
-  --card: #ffffff;
-  --border: #e6e8ec;
+  /* BASE */
+  --bg: #0b0f14;
+  --card: #111827;
+  --border: #1f2937;
 
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
+  /* TEXT */
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
 
-  --accent: #6c5ce7;
-  --accent-2: #4f8cff;
-
+  /* ACCENTS */
+  --accent: #6366f1;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
   --green: #22c55e;
+
+  /* GRADIENTS */
+  --gradient-primary: linear-gradient(135deg, #6366f1, #3b82f6);
+  --gradient-allocation: linear-gradient(90deg, #22c55e, #4ade80);
 }
 
 /* RESET */
@@ -25,12 +32,49 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
 }
 
-/* PAGE */
-.page {
-  padding: 32px;
+/* ================= LAYOUT ================= */
+
+.app {
+  display: flex;
+  height: 100vh;
 }
 
-/* TYPO */
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: #0d1117;
+  border-right: 1px solid var(--border);
+  padding: 24px;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.header {
+  height: 64px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 24px;
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+}
+
+/* ================= TYPO ================= */
+
 h1 {
   font-size: 28px;
   font-weight: 600;
@@ -38,17 +82,27 @@ h1 {
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 }
 
-/* CARDS */
+/* ================= CARDS ================= */
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+
+  /* Premium depth */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
 }
 
 /* KPI */
@@ -57,17 +111,18 @@ h3 {
 }
 
 .kpi-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
 }
 
 .kpi-value {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
   margin-top: 6px;
 }
 
-/* LAYOUT */
+/* ================= LAYOUT HELPERS ================= */
+
 .row {
   display: flex;
   gap: 20px;
@@ -77,7 +132,8 @@ h3 {
 .mb-20 { margin-bottom: 20px; }
 .mt-30 { margin-top: 30px; }
 
-/* TABLE */
+/* ================= TABLE ================= */
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -85,7 +141,7 @@ h3 {
 
 .table th {
   text-align: left;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
   font-weight: 500;
   padding: 12px 0;
@@ -93,11 +149,12 @@ h3 {
 }
 
 .table td {
-  padding: 14px 0;
-  border-bottom: 1px solid #f0f1f3;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
-/* TOKEN */
+/* ================= TOKEN ================= */
+
 .token {
   display: flex;
   align-items: center;
@@ -108,79 +165,82 @@ h3 {
 .token img {
   width: 20px;
   height: 20px;
+  border-radius: 50%;
 }
 
-/* ALLOCATION */
+/* ================= ALLOCATION ================= */
+
 .allocation {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .allocation-bar {
   width: 140px;
   height: 6px;
-  background: #eef0f3;
+  background: rgba(255,255,255,0.08);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .allocation-fill {
   height: 100%;
-  background: var(--green);
+  background: var(--gradient-allocation);
   border-radius: 4px;
 }
 
 .allocation-text {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
-/* UTIL */
+/* ================= BUTTON ================= */
+
+.button-primary {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: var(--gradient-primary);
+  color: white;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+.button-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ================= SIDEBAR LINKS ================= */
+
+.sidebar a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.sidebar a:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: white;
+}
+
+.sidebar a.active {
+  background: rgba(99, 102, 241, 0.2);
+  color: white;
+}
+
+/* ================= UTIL ================= */
+
 .text-secondary {
   color: var(--text-secondary);
-}
-
-/* APP LAYOUT */
-
-.app {
-  display: flex;
-  height: 100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-  width: 240px;
-  background: #ffffff;
-  border-right: 1px solid var(--border);
-  padding: 20px;
-}
-
-/* MAIN */
-
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* HEADER */
-
-.header {
-  height: 60px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 20px;
-  background: #fff;
-}
-
-/* CONTENT */
-
-.content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
 }
