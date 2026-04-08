@@ -1,9 +1,9 @@
 :root {
   /* BASE */
-  --bg: #0a0f1a;
-  --bg-soft: #0f172a;
-  --card: #111827;
-  --border: #1f2937;
+  --bg: #0f1f2f;
+  --bg-soft: #0f1f2f;
+  --card: #1a2e42;
+  --border: rgba(255,255,255,0.06);
 
   /* TEXT */
   --text-primary: #e5e7eb;
@@ -91,16 +91,12 @@ h3 {
 /* ================= CARDS ================= */
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  background: #1a2e42;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
   padding: 20px;
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.02);
-
-  transition: all 0.2s ease; /* ✅ FIXED POSITION */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: all 0.2s ease;
 }
 
 .card:hover {
@@ -225,38 +221,50 @@ h3 {
 
 /* ================= SIDEBAR ================= */
 
-.sidebar-logo {
-  font-weight: 600;
-  font-size: 18px;
-  margin-bottom: 32px;
-  color: white;
+.logo {
+  margin-bottom: 30px;
 }
 
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
+.menu-section {
+  font-size: 11px;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  opacity: .6;
+  margin-top: 20px;
+  color: #9fb3c8;
 }
 
 .sidebar a {
-  display: block;
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
   border-radius: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 
   text-decoration: none;
-  color: var(--text-secondary);
+  color: #e6edf5;
 
-  transition: all 0.2s ease;
+  transition: all .15s ease;
 }
 
 .sidebar a:hover {
-  background: rgba(99, 102, 241, 0.1);
-  color: white;
+  background: rgba(255,255,255,0.08);
 }
 
 .sidebar a.active {
-  background: rgba(99, 102, 241, 0.2);
+  background: #488BC3;
   color: white;
+}
+
+.sidebar a svg {
+  opacity: 0.8;
+}
+
+.sidebar a:hover svg {
+  transform: translateX(2px);
+  opacity: 1;
 }
 
 /* ================= USER ================= */
