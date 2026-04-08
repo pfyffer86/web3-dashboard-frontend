@@ -1,24 +1,18 @@
 "use client"
 
+import { IconRefresh, IconUser } from "@tabler/icons-react"
+
 export default function Header() {
   return (
     <div className="header">
 
-      <button className="button-primary">
-  Refresh
-</button>
+      <button className="button-primary" style={{ marginRight: 12 }}>
+        <IconRefresh size={16} style={{ marginRight: 6 }} />
+        Refresh
+      </button>
 
-      <div style={{
-        width: 32,
-        height: 32,
-        borderRadius: "50%",
-        background: "#eee",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: 12
-      }}>
-        U
+      <div className="user-button">
+        <IconUser size={18} />
       </div>
 
     </div>
