@@ -1,37 +1,28 @@
+"use client"
+
 import "./globals.css"
+import Sidebar from "../components/layout/Sidebar"
+import Header from "../components/layout/Header"
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
-      <body style={{ margin: 0 }}>
+      <body>
 
-        <div style={{ display: "flex", height: "100vh" }}>
+        <div className="app">
 
-          {/* SIDEBAR */}
-          <div style={{
-            width: 220,
-            background: "#0d0d0d",
-            color: "#fff",
-            padding: 20
-          }}>
-            <h2>Apertum</h2>
+          {/* Sidebar */}
+          <Sidebar />
 
-            <div style={{ marginTop: 30 }}>
-              <a href="/dashboard" style={link}>Dashboard</a><br/>
-              <a href="/assets" style={link}>Assets</a><br/>
-              <a href="/settings" style={link}>Settings</a>
+          {/* Main Area */}
+          <div className="main">
+
+            <Header />
+
+            <div className="content">
+              {children}
             </div>
-          </div>
 
-          {/* MAIN */}
-          <div style={{
-            flex: 1,
-            background: "#111",
-            color: "#fff",
-            padding: 20
-          }}>
-            {children}
           </div>
 
         </div>
@@ -39,11 +30,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   )
-}
-
-const link = {
-  color: "#aaa",
-  textDecoration: "none",
-  display: "block",
-  marginBottom: 10
 }
