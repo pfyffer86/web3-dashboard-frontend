@@ -1,38 +1,40 @@
-/* =====================================================
-BASE RESET
-===================================================== */
+:root {
+  --bg: #f7f8fa;
+  --card: #ffffff;
+  --border: #e6e8ec;
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+
+  --accent: #6c5ce7;
+  --accent-2: #4f8cff;
+
+  --green: #22c55e;
 }
 
-html, body {
-  height: 100%;
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: #0b0b0b;
-  color: #ffffff;
+  background: var(--bg);
+  color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* =====================================================
-TYPOGRAPHY SYSTEM
-===================================================== */
+/* PAGE */
+.page {
+  padding: 32px;
+}
 
+/* TYPO */
 h1 {
   font-size: 28px;
   font-weight: 600;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 20px;
-  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 h3 {
@@ -40,65 +42,42 @@ h3 {
   font-weight: 600;
 }
 
-.text-secondary {
-  color: rgba(255,255,255,0.6);
-}
-
-.text-muted {
-  color: rgba(255,255,255,0.4);
-}
-
-.text-small {
-  font-size: 12px;
-}
-
-/* =====================================================
-LAYOUT FOUNDATION
-===================================================== */
-
-.page {
-  padding: 40px;
-}
-
-/* =====================================================
-CARD SYSTEM
-===================================================== */
-
+/* CARDS */
 .card {
-  background: #111;
-  border: 1px solid #222;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 
-.card:hover {
-  box-shadow: 0 0 20px rgba(74, 222, 128, 0.08);
-  border-color: #2a2a2a;
-}
-
-/* KPI CARD */
-
+/* KPI */
 .kpi {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  min-width: 220px;
 }
 
 .kpi-label {
   font-size: 13px;
-  color: rgba(255,255,255,0.6);
+  color: var(--text-secondary);
 }
 
 .kpi-value {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
+  margin-top: 6px;
 }
 
-/* =====================================================
-TABLE SYSTEM
-===================================================== */
+/* LAYOUT */
+.row {
+  display: flex;
+  gap: 20px;
+}
 
+.mb-30 { margin-bottom: 30px; }
+.mb-20 { margin-bottom: 20px; }
+.mt-30 { margin-top: 30px; }
+
+/* TABLE */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -106,261 +85,58 @@ TABLE SYSTEM
 
 .table th {
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
   font-weight: 500;
-  color: rgba(255,255,255,0.5);
-  padding: 12px 10px;
-  border-bottom: 1px solid #222;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
 }
 
 .table td {
-  padding: 14px 10px;
-  border-bottom: 1px solid #1a1a1a;
-  font-size: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f1f3;
 }
 
-.table tr:hover {
-  background: rgba(255,255,255,0.02);
-}
-
-/* =====================================================
-TOKEN CELL
-===================================================== */
-
+/* TOKEN */
 .token {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-weight: 500;
 }
 
 .token img {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
 }
 
-/* =====================================================
-ALLOCATION BAR
-===================================================== */
-
+/* ALLOCATION */
 .allocation {
-  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .allocation-bar {
+  width: 140px;
   height: 6px;
-  background: #222;
-  border-radius: 6px;
+  background: #eef0f3;
+  border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 4px;
 }
 
 .allocation-fill {
   height: 100%;
-  border-radius: 6px;
-  background: linear-gradient(
-    90deg,
-    #4ade80,
-    #22c55e
-  );
+  background: var(--green);
+  border-radius: 4px;
 }
 
 .allocation-text {
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
+  color: var(--text-secondary);
 }
 
-/* =====================================================
-BUTTON SYSTEM
-===================================================== */
-
-.button {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.button:hover {
-  background: #222;
-  border-color: #333;
-}
-
-/* =====================================================
-SPACING HELPERS
-===================================================== */
-
-.row {
-  display: flex;
-  gap: 20px;
-}
-
-.mt-20 { margin-top: 20px; }
-.mt-30 { margin-top: 30px; }
-.mb-20 { margin-bottom: 20px; }
-.mb-30 { margin-bottom: 30px; }
-
-/* =====================================================
-SCROLLBAR (SUBTLE)
-===================================================== */
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0b0b0b;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #333;
-}
-
-/* =====================================================
-APP LAYOUT
-===================================================== */
-
-.app {
-  display: flex;
-  height: 100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-  width: 240px;
-  background: #0e0e0e;
-  border-right: 1px solid #1f1f1f;
-  padding: 20px;
-  position: fixed;
-  height: 100%;
-}
-
-.sidebar-logo {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 30px;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.nav-item {
-  padding: 10px 12px;
-  border-radius: 8px;
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.nav-item:hover {
-  background: #1a1a1a;
-  color: #fff;
-}
-
-.nav-item.active {
-  background: #1f1f1f;
-  color: #fff;
-}
-
-/* MAIN AREA */
-
-.main {
-  margin-left: 240px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* HEADER */
-
-.header {
-  height: 70px;
-  border-bottom: 1px solid #1f1f1f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-  position: sticky;
-  top: 0;
-  background: #0b0b0b;
-  z-index: 10;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* USER */
-
-.user {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #1f1f1f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-/* DROPDOWN */
-
-.dropdown {
-  position: absolute;
-  top: 60px;
-  right: 30px;
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 10px;
-  padding: 12px;
-  width: 200px;
-  z-index: 20;
-}
-
-.dropdown-label {
-  font-size: 12px;
-  opacity: 0.6;
-}
-
-.dropdown-email {
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-
-.dropdown-divider {
-  height: 1px;
-  background: #222;
-  margin: 10px 0;
-}
-
-.dropdown-item {
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.dropdown-item:hover {
-  opacity: 0.7;
-}
-
-/* CONTENT */
-
-.content {
-  padding: 30px;
-  overflow-y: auto;
-  height: calc(100vh - 70px);
+/* UTIL */
+.text-secondary {
+  color: var(--text-secondary);
 }
