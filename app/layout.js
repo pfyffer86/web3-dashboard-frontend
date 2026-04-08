@@ -1,5 +1,3 @@
-"use client"
-
 import "./globals.css"
 import Sidebar from "../components/layout/Sidebar"
 import Header from "../components/layout/Header"
@@ -11,10 +9,10 @@ export default function RootLayout({ children }) {
 
         <div className="app">
 
-          {/* Sidebar */}
+          {/* SIDEBAR */}
           <Sidebar />
 
-          {/* Main Area */}
+          {/* MAIN */}
           <div className="main">
 
             <Header />
