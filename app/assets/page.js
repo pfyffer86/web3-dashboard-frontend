@@ -84,15 +84,19 @@ export default function AssetsPage() {
 
       <div className="kpi-grid">
 
-        <div className="card">
-          <div className="kpi-label">Total Assets Value</div>
-          <div className="kpi-value">{formatUSD(totalValue)}</div>
-        </div>
+  <div className="card kpi-card">
+    <div className="kpi-label">Total Assets Value</div>
+    <div className="kpi-value">{formatUSD(totalValue)}</div>
+    <div className="kpi-sub">Across all wallets</div>
+  </div>
 
-        <div className="card">
-          <div className="kpi-label">Tracked Assets</div>
-          <div className="kpi-value">{tokens.length}</div>
-        </div>
+  <div className="card kpi-card">
+    <div className="kpi-label">Tracked Assets</div>
+    <div className="kpi-value">{tokens.length}</div>
+    <div className="kpi-sub">Tokens in portfolio</div>
+  </div>
+
+</div>
 
       </div>
 
