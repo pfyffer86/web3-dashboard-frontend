@@ -6,7 +6,7 @@ import {
   IconLayoutDashboard,
   IconChartLine,
   IconCoins,
-  IconLayers,
+  IconStack2,
   IconRobot,
   IconShovel,
   IconWallet,
