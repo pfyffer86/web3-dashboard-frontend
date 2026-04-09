@@ -130,17 +130,21 @@ export default function AssetsPage() {
                 <tr key={t.symbol}>
 
                   <td>
-                    <div className="token">
+                   <div className="token-icon">
+  <img
+    src={icon}
+    alt={t.symbol}
+    onError={(e) => {
+      e.target.style.display = "none"
+      const fallback = e.target.parentNode.querySelector(".token-fallback")
+      if (fallback) fallback.style.display = "flex"
+    }}
+  />
 
-                      {icon && (
-                        <img
-                          src={icon}
-                          alt={t.symbol}
-                          onError={(e) => {
-                            e.target.style.display = "none"
-                            e.target.nextSibling.style.display = "flex"
-                          }}
-                        />
+  <div className="token-fallback">
+    {t.symbol[0]}
+  </div>
+</div>
                       )}
 
                       <div className="token-fallback">
