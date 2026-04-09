@@ -82,25 +82,27 @@ export default function AssetsPage() {
 
       <h1>Assets</h1>
 
+      {/* KPI */}
       <div className="kpi-grid">
 
-  <div className="card kpi-card">
-    <div className="kpi-label">Total Assets Value</div>
-    <div className="kpi-value">{formatUSD(totalValue)}</div>
-    <div className="kpi-sub">Across all wallets</div>
-  </div>
+        <div className="card kpi-card">
+          <div className="kpi-label">Total Assets Value</div>
+          <div className="kpi-value">{formatUSD(totalValue)}</div>
+          <div className="kpi-sub">Across all wallets</div>
+        </div>
 
-  <div className="card kpi-card">
-    <div className="kpi-label">Tracked Assets</div>
-    <div className="kpi-value">{tokens.length}</div>
-    <div className="kpi-sub">Tokens in portfolio</div>
-  </div>
+        <div className="card kpi-card">
+          <div className="kpi-label">Tracked Assets</div>
+          <div className="kpi-value">{tokens.length}</div>
+          <div className="kpi-sub">Tokens in portfolio</div>
+        </div>
 
       </div>
 
+      {/* TABLE */}
       <div className="card">
 
-        <h3 style={{ marginBottom: 16 }}>Assets Breakdown</h3>
+        <h3 className="mb-16">Assets Breakdown</h3>
 
         <table className="table">
 
@@ -131,51 +133,49 @@ export default function AssetsPage() {
               return (
                 <tr key={t.symbol}>
 
-  <td>
-    <div className="token">
-      
-      <div className="token-icon">
-        <img
-          src={icon}
-          alt={t.symbol}
-          onError={(e) => {
-            e.target.style.display = "none"
-            const fallback = e.target.parentNode.querySelector(".token-fallback")
-            if (fallback) fallback.style.display = "flex"
-          }}
-        />
+                  <td>
+                    <div className="token">
 
-        <div className="token-fallback">
-          {t.symbol[0]}
-        </div>
-      </div>
+                      <div className="token-icon">
+                        <img
+                          src={icon}
+                          alt={t.symbol}
+                          onError={(e) => {
+                            e.target.style.display = "none"
+                            const fallback = e.target.parentNode.querySelector(".token-fallback")
+                            if (fallback) fallback.style.display = "flex"
+                          }}
+                        />
 
-      <span>{t.symbol}</span>
+                        <div className="token-fallback">
+                          {t.symbol[0]}
+                        </div>
+                      </div>
 
-    </div>
-  </td>
+                      <span>{t.symbol}</span>
 
-  <td>{formatAmount(t.amount)}</td>
+                    </div>
+                  </td>
 
-  <td>{formatUSD(price)}</td>
+                  <td>{formatAmount(t.amount)}</td>
+                  <td>{formatUSD(price)}</td>
+                  <td>{formatUSD(t.value_usd)}</td>
 
-  <td>{formatUSD(t.value_usd)}</td>
+                  <td>
+                    <div className="allocation">
+                      <div className="allocation-bar">
+                        <div
+                          className="allocation-fill"
+                          style={{ width: `${allocation}%` }}
+                        />
+                      </div>
+                      <div className="allocation-text">
+                        {allocation.toFixed(1)}%
+                      </div>
+                    </div>
+                  </td>
 
-  <td>
-    <div className="allocation">
-      <div className="allocation-bar">
-        <div
-          className="allocation-fill"
-          style={{ width: `${allocation}%` }}
-        />
-      </div>
-      <div className="allocation-text">
-        {allocation.toFixed(1)}%
-      </div>
-    </div>
-  </td>
-
-</tr>
+                </tr>
               )
             })}
           </tbody>
@@ -184,9 +184,10 @@ export default function AssetsPage() {
 
       </div>
 
-      <div className="card" style={{ marginTop: 24 }}>
+      {/* WALLET */}
+      <div className="card mt-24">
 
-        <h3 style={{ marginBottom: 16 }}>Wallet Breakdown</h3>
+        <h3 className="mb-16">Wallet Breakdown</h3>
 
         {data.wallets.map(w => (
           <div key={w.id} className="wallet-header">
