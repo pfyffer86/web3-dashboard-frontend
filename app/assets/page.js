@@ -130,48 +130,28 @@ export default function AssetsPage() {
                 <tr key={t.symbol}>
 
                   <td>
-                   <div className="token-icon">
-  <img
-    src={icon}
-    alt={t.symbol}
-    onError={(e) => {
-      e.target.style.display = "none"
-      const fallback = e.target.parentNode.querySelector(".token-fallback")
-      if (fallback) fallback.style.display = "flex"
-    }}
-  />
+  <div className="token">
+    
+    <div className="token-icon">
+      <img
+        src={icon}
+        alt={t.symbol}
+        onError={(e) => {
+          e.target.style.display = "none"
+          const fallback = e.target.parentNode.querySelector(".token-fallback")
+          if (fallback) fallback.style.display = "flex"
+        }}
+      />
 
-  <div className="token-fallback">
-    {t.symbol[0]}
+      <div className="token-fallback">
+        {t.symbol[0]}
+      </div>
+    </div>
+
+    <span>{t.symbol}</span>
+
   </div>
-</div>
-                      )}
-
-                      <div className="token-fallback">
-                        {t.symbol[0]}
-                      </div>
-
-                      <span>{t.symbol}</span>
-                    </div>
-                  </td>
-
-                  <td>{formatAmount(t.amount)}</td>
-                  <td>{formatUSD(price)}</td>
-                  <td>{formatUSD(t.value_usd)}</td>
-
-                  <td>
-                    <div className="allocation">
-                      <div className="allocation-bar">
-                        <div
-                          className="allocation-fill"
-                          style={{ width: `${allocation}%` }}
-                        />
-                      </div>
-                      <div className="allocation-text">
-                        {allocation.toFixed(1)}%
-                      </div>
-                    </div>
-                  </td>
+</td>
 
                 </tr>
               )
