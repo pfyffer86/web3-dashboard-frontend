@@ -96,9 +96,26 @@ h3 {
 /* ================= SIDEBAR ================= */
 
 .logo {
-  font-weight: 600;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: white;
+  font-weight: 700;
 }
 
 .menu-section {
@@ -257,4 +274,12 @@ h3 {
 
 .user-button {
   margin-left: 10px;
+}
+
+/* ================= TOKEN ICON ================= */
+
+.token-icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
 }
