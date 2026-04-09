@@ -99,7 +99,8 @@ h3 {
 .logo {
   width: 100%;
   margin-bottom: 30px;
-
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: flex-start;
