@@ -3,28 +3,11 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabase"
 
-/* ICON */
+/* ICON (NEU - sauber) */
 
-function getTokenIcon(token) {
-  const map = {
-    BTC: 1,
-    ETH: 1027,
-    USDT: 825,
-    USDC: 3408,
-    SOL: 5426,
-    AVAX: 5805,
-    APTM: 36215
-  }
-
-  const key =
-    token.price_symbol ||
-    token.symbol.replace("w", "")
-
-  const id = map[key]
-
-  if (!id) return null
-
-  return `https://s2.coinmarketcap.com/static/img/coins/64x64/${id}.png`
+function getTokenIcon(cmc_id) {
+  if (!cmc_id) return null
+  return `https://s2.coinmarketcap.com/static/img/coins/64x64/${cmc_id}.png`
 }
 
 /* PAGE */
@@ -123,33 +106,25 @@ export default function AssetsPage() {
                 ? (t.value_usd / totalValue) * 100
                 : 0
 
-              const price =
-                t.price && t.price > 0
-                  ? t.price
-                  : (t.amount > 0 ? t.value_usd / t.amount : 0)
-
-              const icon = getTokenIcon(t)
+              const icon = getTokenIcon(t.cmc_id)
 
               return (
                 <tr key={t.symbol}>
 
+                  {/* ASSET */}
                   <td>
                     <div className="token">
 
                       <div className="token-icon">
-                        <img
-                          src={icon}
-                          alt={t.symbol}
-                          onError={(e) => {
-                            e.target.style.display = "none"
-                            const fallback = e.target.parentNode.querySelector(".token-fallback")
-                            if (fallback) fallback.style.display = "flex"
-                          }}
-                        />
 
-                        <div className="token-fallback">
-                          {t.symbol[0]}
-                        </div>
+                        {icon ? (
+                          <img src={icon} alt={t.symbol} />
+                        ) : (
+                          <div className="token-fallback">
+                            {t.symbol[0]}
+                          </div>
+                        )}
+
                       </div>
 
                       <span>{t.symbol}</span>
@@ -157,10 +132,16 @@ export default function AssetsPage() {
                     </div>
                   </td>
 
+                  {/* BALANCE */}
                   <td>{formatAmount(t.amount)}</td>
-                  <td>{formatUSD(price)}</td>
+
+                  {/* PRICE */}
+                  <td>{formatUSD(t.price)}</td>
+
+                  {/* VALUE */}
                   <td>{formatUSD(t.value_usd)}</td>
 
+                  {/* ALLOCATION */}
                   <td>
                     <div className="allocation">
                       <div className="allocation-bar">
@@ -217,7 +198,7 @@ function formatUSD(value) {
 function formatAmount(value) {
   if (!value) return "0"
 
-  if (value < 0.0001) return value.toExponential(2)
+  if (value < 0.0001) return value.toFixed(8)   // ❗ keine scientific notation mehr
   if (value < 1) return value.toFixed(6)
 
   return new Intl.NumberFormat("en-US", {
