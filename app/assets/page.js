@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabase"
 
+import {
+  IconWallet,
+  IconCoins,
+  IconPigMoney
+} from "@tabler/icons-react"
+
 /* ICON */
 
 function getTokenIcon(cmc_id) {
@@ -62,16 +68,28 @@ export default function AssetsPage() {
       {/* KPI */}
       <div className="kpi-grid">
         <div className="card kpi-card">
-          <div className="kpi-label">Total Assets Value</div>
-          <div className="kpi-value">{formatUSD(totalValue)}</div>
-          <div className="kpi-sub">Across all wallets</div>
-        </div>
+
+  <div className="kpi-header">
+    <div className="kpi-label">Total Assets Value</div>
+    <IconPigMoney size={18} className="kpi-icon" />
+  </div>
+
+  <div className="kpi-value">{formatUSD(totalValue)}</div>
+  <div className="kpi-sub">Across all wallets</div>
+
+</div>
 
         <div className="card kpi-card">
-          <div className="kpi-label">Tracked Assets</div>
-          <div className="kpi-value">{tokens.length}</div>
-          <div className="kpi-sub">Tokens in portfolio</div>
-        </div>
+
+  <div className="kpi-header">
+    <div className="kpi-label">Tracked Assets</div>
+    <IconCoins size={18} className="kpi-icon" />
+  </div>
+
+  <div className="kpi-value">{tokens.length}</div>
+  <div className="kpi-sub">Tokens in portfolio</div>
+
+</div>
       </div>
 
       {/* TABLE */}
@@ -158,15 +176,23 @@ export default function AssetsPage() {
             onClick={() => setOpenWallet(isOpen ? null : i)}
           >
 
-            <div>
-              <div className="wallet-label">
-                {w.label || "Wallet"}
-              </div>
+            <div className="wallet-left">
 
-              <div className="wallet-address">
-                {formatAddress(w.address)}
-              </div>
-            </div>
+  <div className="wallet-icon">
+    <IconWallet size={18} />
+  </div>
+
+  <div>
+    <div className="wallet-label">
+      {w.label || "Wallet"}
+    </div>
+
+    <div className="wallet-address">
+      {formatAddress(w.address)}
+    </div>
+  </div>
+
+</div>
 
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="wallet-value">
