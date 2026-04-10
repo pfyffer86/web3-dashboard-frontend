@@ -63,7 +63,7 @@ export default function AssetsPage() {
   return (
     <div>
 
-      <h1>Assets</h1>
+      <h1>My Assets</h1>
 
       {/* KPI */}
       <div className="kpi-grid">
