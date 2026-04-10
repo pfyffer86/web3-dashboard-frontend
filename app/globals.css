@@ -196,13 +196,22 @@ h3 {
 /* ================= HEADER ================= */
 
 .header {
+  height: 64px;
+
   display: flex;
   align-items: center;
-  height: 64px;
+  justify-content: flex-end;
 
   padding: 0 24px;
 
-  border-bottom: none; /* ← FIX */
+  border-bottom: none; /* final clean */
+}
+
+/* RIGHT SIDE */
+.header-right {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 /* pushes content right */
@@ -222,13 +231,6 @@ h3 {
   color: var(--text-secondary);
 }
 
-/* RIGHT */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 /* Refresh Button kleiner */
 .header-refresh {
   display: flex;
@@ -239,22 +241,27 @@ h3 {
 
 /* User */
 .user-button {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+
+  border-radius: 10px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: rgba(59,130,246,0.12);
+  color: #3b82f6;
 
+  border: 1px solid rgba(59,130,246,0.25);
+
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .user-button:hover {
-  background: var(--card-hover);
+  background: rgba(59,130,246,0.18);
+  transform: translateY(-1px);
 }
 
 .user-button.primary {
@@ -283,22 +290,40 @@ h3 {
   position: relative;
 }
 
-.user-dropdown {
-  position: absolute;
-  top: 48px;
-  right: 0;
+.user-button {
+  width: 36px;
+  height: 36px;
 
-  min-width: 220px;
-
-  background: var(--card);
-  border: 1px solid var(--border);
   border-radius: 10px;
 
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  background: rgba(59,130,246,0.12);
+  color: #3b82f6;
 
-  z-index: 100;
+  border: 1px solid rgba(59,130,246,0.25);
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-button:hover {
+  background: rgba(59,130,246,0.18);
+  transform: translateY(-1px);
+}
+
+/* USER INFO */
+.user-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.user-info span {
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .user-email {
@@ -310,6 +335,30 @@ h3 {
 .user-email span {
   color: var(--text-primary);
   font-size: 13px;
+}
+
+/* DROPDOWN ITEM */
+.dropdown-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px;
+  border-radius: 8px;
+
+  background: transparent;
+  border: none;
+
+  color: var(--text-primary);
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(255,255,255,0.06);
 }
 
 .dropdown-btn {
