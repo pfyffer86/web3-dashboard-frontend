@@ -493,6 +493,39 @@ h3 {
   padding: 8px 0;
 }
 
+/* ===== ACCORDION ANIMATION ===== */
+
+.wallet-body {
+  max-height: 0;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(-4px);
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.wallet-body.open {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+  padding: 12px 0 16px 0;
+}
+
+/* ===== CHEVRON ===== */
+
+.wallet-chevron {
+  margin-left: 10px;
+  transition: transform 0.25s ease;
+}
+
+.wallet-chevron.open {
+  transform: rotate(180deg);
+}
+
 /* ================= BUTTON ================= */
 
 .button-primary {
