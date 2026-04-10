@@ -138,16 +138,17 @@ export default function WalletsPage() {
       <h1>My Wallets</h1>
 
       {/* GRID */}
-      <div className="wallet-grid">
+     {/* ADD CARD (SEPARATE ROW) */}
+<div className="mb-20">
+  <div className="card add-wallet-card full" onClick={openAdd}>
+    <IconPlus size={36} />
+    <div>Add Wallet</div>
+  </div>
+</div>
 
-        {/* ADD CARD */}
-        <div className="card add-wallet-card" onClick={openAdd}>
-          <IconPlus size={32} />
-          <div>Add Wallet</div>
-        </div>
-
-        {/* WALLET CARDS */}
-        {wallets.map(w => (
+{/* WALLET GRID */}
+<div className="wallet-grid">
+  {wallets.map(w => (
           <div key={w.id} className="card wallet-card">
 
             <div className="wallet-row">
