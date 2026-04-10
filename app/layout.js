@@ -1,4 +1,7 @@
 import "./globals.css"
+import "./styles/layout.css"
+import "./styles/components.css"
+
 import Sidebar from "../components/layout/Sidebar"
 import Header from "../components/layout/Header"
 
