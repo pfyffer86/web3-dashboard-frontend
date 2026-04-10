@@ -134,87 +134,100 @@ export default function AssetsPage() {
         </table>
       </div>
 
-      {/* WALLET BREAKDOWN */}
-      <div className="card mt-24">
-        <h3 className="mb-16">Wallet Breakdown</h3>
+  {/* WALLET BREAKDOWN */}
+<div className="card mt-24">
 
-        {data.wallets.map((w, i) => {
+  <h3 className="mb-16">Wallet Breakdown</h3>
 
-          const isOpen = openWallet === i
+  {[...data.wallets]
+    .sort((a, b) => b.totalValue - a.totalValue) // ✅ Wallet Sort
+    .map((w, i) => {
 
-          return (
-            <div key={w.id} className="wallet-card">
+      const isOpen = openWallet === i
 
-              <div
-                className="wallet-header clickable"
-                onClick={() => setOpenWallet(isOpen ? null : i)}
-              >
+      // ✅ Token Sort innerhalb Wallet
+      const sortedTokens = [...(w.tokens || [])]
+        .sort((a, b) => b.value_usd - a.value_usd)
 
-                <div>
-                  <div className="wallet-label">
-                    {w.label || "Wallet"}
-                  </div>
+      return (
+        <div key={w.id} className="wallet-card">
 
-                  <div className="wallet-address">
-                    {formatAddress(w.address)}
-                  </div>
-                </div>
+          {/* HEADER */}
+          <div
+            className="wallet-header clickable"
+            onClick={() => setOpenWallet(isOpen ? null : i)}
+          >
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <div className="wallet-value">
-                    {formatUSD(w.totalValue)}
-                  </div>
-
-                  <div className={`wallet-chevron ${isOpen ? "open" : ""}`}>
-                    ▾
-                  </div>
-                </div>
-
+            <div>
+              <div className="wallet-label">
+                {w.label || "Wallet"}
               </div>
 
-              {/* ANIMATED BODY */}
-             <div className={`wallet-body ${isOpen ? "open" : ""}`}>
+              <div className="wallet-address">
+                {formatAddress(w.address)}
+              </div>
+            </div>
 
-  {/* HEADER */}
-  <div className="wallet-token-header">
-    <div>Asset</div>
-    <div>Balance</div>
-    <div>Price</div>
-    <div>Value</div>
-  </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="wallet-value">
+                {formatUSD(w.totalValue)}
+              </div>
 
-  {/* ROWS */}
-  {w.tokens?.map(t => {
+              <div className={`wallet-chevron ${isOpen ? "open" : ""}`}>
+                ▾
+              </div>
+            </div>
 
-    const icon = getTokenIcon(t.cmc_id)
-
-    return (
-      <div key={t.symbol} className="wallet-token-row">
-
-        <div className="token">
-          <div className="token-icon">
-            {icon
-              ? <img src={icon} />
-              : <div className="token-fallback">{t.symbol[0]}</div>}
           </div>
-          <span>{t.symbol}</span>
+
+          {/* ACCORDION */}
+          <div className={`wallet-body ${isOpen ? "open" : ""}`}>
+
+            {/* HEADER */}
+            <div className="wallet-token-header">
+              <div>Asset</div>
+              <div>Balance</div>
+              <div>Price</div>
+              <div>Value</div>
+            </div>
+
+            {/* ROWS */}
+            {sortedTokens.map(t => {
+
+              const icon = getTokenIcon(t.cmc_id)
+
+              return (
+                <div key={t.symbol} className="wallet-token-row">
+
+                  <div className="token">
+                    <div className="token-icon">
+                      {icon
+                        ? <img src={icon} />
+                        : <div className="token-fallback">{t.symbol[0]}</div>}
+                    </div>
+
+                    {/* vorbereitet für späteren Namen */}
+                    <div className="token-meta">
+                      <div>{t.symbol}</div>
+                    </div>
+
+                  </div>
+
+                  <div>{formatAmount(t.amount)}</div>
+                  <div>{formatPrice(t.price)}</div>
+                  <div>{formatUSD(t.value_usd)}</div>
+
+                </div>
+              )
+            })}
+
+          </div>
+
         </div>
-
-        <div>{formatAmount(t.amount)}</div>
-        <div>{formatPrice(t.price)}</div>
-        <div>{formatUSD(t.value_usd)}</div>
-
-      </div>
-    )
-  })}
+      )
+    })}
 
 </div>
-
-            </div>
-          )
-        })}
-
-      </div>
 
     </div>
   )
