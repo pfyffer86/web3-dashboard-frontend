@@ -139,7 +139,7 @@ export default function WalletsPage() {
 
       {/* GRID */}
      {/* ADD CARD (SEPARATE ROW) */}
-<div className="mb-20">
+<div className="mb-24">
   <div className="card add-wallet-card full" onClick={openAdd}>
     <IconPlus size={36} />
     <div>Add Wallet</div>
