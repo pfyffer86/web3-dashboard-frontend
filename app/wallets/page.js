@@ -217,12 +217,18 @@ export default function WalletsPage() {
                 />
 
                 <div className="modal-actions">
-                  <button onClick={() => setModal(null)}>Cancel</button>
+                  
+                  <button
+                    className="button-secondary"
+                    onClick={() => setModal(null)}
+                    >
+                    Cancel
+                  </button>
 
                   <button
                     className="button-primary"
                     onClick={modal === "add" ? handleAdd : handleEdit}
-                  >
+                    >
                     Save
                   </button>
                 </div>
