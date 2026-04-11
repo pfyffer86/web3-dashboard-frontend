@@ -594,7 +594,17 @@ h3 {
 }
 
 .wallet-card {
-  border-top: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+
+  transition: all 0.2s ease;
+}
+
+.wallet-card:hover {
+  border-color: rgba(59,130,246,0.15);
+
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.08),
+    0 6px 20px rgba(0,0,0,0.35);
 }
 
 .wallet-left {
@@ -604,9 +614,10 @@ h3 {
 }
 
 .wallet-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
 
   display: flex;
   align-items: center;
@@ -622,7 +633,8 @@ h3 {
 }
 
 .wallet-label {
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .wallet-address {
@@ -793,20 +805,20 @@ h3 {
 
 .wallet-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .action-icon {
-  cursor: pointer;
-  color: white;
-  opacity: 0.7;
+  opacity: 0.6;
+  transition: all 0.15s ease;
 }
 
 .action-icon:hover {
   opacity: 1;
+  color: var(--blue);
 }
 
-.action-icon.delete {
+.action-icon.delete:hover {
   color: #ef4444;
 }
 
@@ -822,7 +834,7 @@ h3 {
 
   cursor: pointer;
 
-  color: var(--accent);
+  color: var(--blue);
 
   min-height: 120px;
 
@@ -839,21 +851,30 @@ h3 {
   width: 100%;
   min-height: 120px;
 
-  flex-direction: row;
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 14px;
 
-  font-weight: 500;
-
   margin-bottom: 32px;
+
+  background: rgba(59,130,246,0.08);
+  border: 1px dashed rgba(59,130,246,0.4);
+  border-radius: 12px;
+
+  cursor: pointer;
+  color: var(--blue);
+
+  transition: all 0.2s ease;
 }
 
 .add-wallet-card.full:hover {
   background: rgba(59,130,246,0.12);
 }
 
+
 .add-wallet-card.full svg {
-  color: var(--accent);
+  color: var(--blue);
 }
 
 /* ================= MODAL OVERLAY ================= */
@@ -978,7 +999,7 @@ HEADER USER UX FIX (MINIMAL SAFE PATCH)
 /* LOGIN BUTTON LOOK */
 .dropdown-btn.login {
   background: rgba(59,130,246,0.15);
-  color: var(--accent);
+  color: var(--blue);
 }
 
 .dropdown-btn.login:hover {
