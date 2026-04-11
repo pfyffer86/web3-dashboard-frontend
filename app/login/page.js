@@ -42,7 +42,7 @@ export default function LoginPage() {
 
         {/* OPTIONAL BRAND */}
         <div className="login-logo">
-          APERTUM
+          MY APERTUM DASHBOARD
         </div>
 
         <h1 className="login-title">Login</h1>
