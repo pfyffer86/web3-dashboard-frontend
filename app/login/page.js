@@ -9,12 +9,17 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const router = useRouter()
 
-  async function handleLogin() {
+  async function handleLogin(e) {
+    e?.preventDefault()
+
+    if (!email || !password) return
 
     setLoading(true)
+    setError("")
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -22,7 +27,7 @@ export default function LoginPage() {
     })
 
     if (error) {
-      alert(error.message)
+      setError(error.message)
       setLoading(false)
       return
     }
@@ -35,9 +40,14 @@ export default function LoginPage() {
 
       <div className="card login-card">
 
+        {/* OPTIONAL BRAND */}
+        <div className="login-logo">
+          APERTUM
+        </div>
+
         <h1 className="login-title">Login</h1>
 
-        <div className="login-form">
+        <form className="login-form" onSubmit={handleLogin}>
 
           <input
             placeholder="Email"
@@ -52,15 +62,21 @@ export default function LoginPage() {
             onChange={e => setPassword(e.target.value)}
           />
 
+          {error && (
+            <div className="login-error">
+              {error}
+            </div>
+          )}
+
           <button
+            type="submit"
             className="button-primary login-button"
-            onClick={handleLogin}
-            disabled={loading}
+            disabled={loading || !email || !password}
           >
-            {loading ? "Loading..." : "Login"}
+            {loading ? "Signing in..." : "Login"}
           </button>
 
-        </div>
+        </form>
 
       </div>
 
