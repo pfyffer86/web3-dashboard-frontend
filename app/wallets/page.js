@@ -216,22 +216,23 @@ export default function WalletsPage() {
                   onChange={e => setForm({ ...form, address: e.target.value })}
                 />
 
-                <div className="modal-actions">
-                  
-                  <button
-                    className="button-secondary"
-                    onClick={() => setModal(null)}
-                    >
-                    Cancel
-                  </button>
+            <div className="modal-actions">
 
-                  <button
-                    className="button-primary"
-                    onClick={modal === "add" ? handleAdd : handleEdit}
-                    >
-                    Save
-                  </button>
-                </div>
+                <button
+                className="button-secondary"
+                onClick={() => setModal(null)}
+                >
+                Cancel
+                </button>
+
+                <button
+                className="button-danger"
+                onClick={() => deleteWallet(modal.id)}
+                >
+                Delete
+                </button>
+
+            </div>
               </>
             )}
 
