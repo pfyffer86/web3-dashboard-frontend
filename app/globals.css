@@ -209,9 +209,9 @@ h3 {
 
 /* RIGHT SIDE */
 .header-right {
+  margin-left: auto; /* 🔥 FIX */
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* 🔥 rechts */
 }
 
 /* pushes content right */
