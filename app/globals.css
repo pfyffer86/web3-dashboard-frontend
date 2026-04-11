@@ -1067,3 +1067,52 @@ HEADER USER UX FIX (MINIMAL SAFE PATCH)
   position: relative;
   z-index: 10;
 }
+
+/* =====================================================
+LOGIN PAGE
+===================================================== */
+
+.login-page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 360px;
+  padding: 28px;
+}
+
+.login-title {
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-form input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+
+  background: #0f1620;
+  color: var(--text-primary);
+
+  font-size: 13px;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: rgba(59,130,246,0.4);
+
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.2);
+}
+
+.login-button {
+  margin-top: 8px;
+  width: 100%;
+}
