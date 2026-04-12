@@ -19,17 +19,33 @@ export default function StakingPage() {
     const { data: sessionData } = await supabase.auth.getSession()
     const token = sessionData?.session?.access_token
 
-    const res = await fetch(
-      "https://apertum-dashboard-production.up.railway.app/api/staking",
-      {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    )
+    try {
 
-    const json = await res.json()
-    setData(json || [])
+      const res = await fetch(
+        "https://apertum-dashboard-production.up.railway.app/api/staking",
+        {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        }
+      )
+
+      const json = await res.json()
+
+      // 🔥 CRITICAL FIX: ensure array
+      if (!Array.isArray(json)) {
+        console.error("INVALID RESPONSE:", json)
+        setData([])
+      } else {
+        setData(json)
+      }
+
+    } catch (err) {
+
+      console.error("FETCH ERROR:", err)
+      setData([])
+    }
+
     setLoading(false)
   }
 
@@ -39,16 +55,15 @@ export default function StakingPage() {
 
   if (loading) return <div>Loading...</div>
 
+  // 🔥 SAFETY LAYER
+  const safeData = Array.isArray(data) ? data : []
+
   /* ================= KPI ================= */
 
-  const totalStake = data.reduce((sum, n) => sum + n.stake, 0)
-  const totalNFTs = data.length
+  const totalStake = safeData.reduce((sum, n) => sum + (n.stake || 0), 0)
+  const totalNFTs = safeData.length
 
-  const totalMaxStake = data.reduce((sum, n) => sum + (n.maxStake || 0), 0)
-
-  const utilizationGlobal = totalMaxStake > 0
-    ? totalStake / totalMaxStake
-    : 0
+  const totalMaxStake = safeData.reduce((sum, n) => sum + (n.maxStake || 0), 0)
 
   return (
     <div>
@@ -118,10 +133,14 @@ export default function StakingPage() {
           </thead>
 
           <tbody>
-            {data.map(n => {
+            {safeData.map(n => {
 
-              const utilization = n.maxStake > 0
-                ? n.stake / n.maxStake
+              const stake = n.stake || 0
+              const maxStake = n.maxStake || 0
+              const progress = n.progress || 0
+
+              const utilization = maxStake > 0
+                ? stake / maxStake
                 : 0
 
               return (
@@ -147,10 +166,10 @@ export default function StakingPage() {
 
                   {/* STAKE */}
                   <td>
-                    {formatAmount(n.stake)} / {formatAmount(n.maxStake)}
+                    {formatAmount(stake)} / {formatAmount(maxStake)}
                   </td>
 
-                  {/* UTILIZATION BAR */}
+                  {/* UTILIZATION */}
                   <td>
                     <div className="allocation">
 
@@ -179,14 +198,14 @@ export default function StakingPage() {
                         <div
                           className="allocation-fill"
                           style={{
-                            width: `${n.progress * 100}%`,
+                            width: `${progress * 100}%`,
                             background: "var(--blue)"
                           }}
                         />
                       </div>
 
                       <div className="allocation-text">
-                        {(n.progress * 100).toFixed(1)}%
+                        {(progress * 100).toFixed(1)}%
                       </div>
 
                     </div>
@@ -217,11 +236,10 @@ function formatAmount(v) {
   }).format(v)
 }
 
-/* 🔥 verhindert 2e+47 Anzeige */
 function getUtilizationColor(u) {
 
-  if (u <= 0.25) return "#ef4444"   // red
-  if (u <= 0.5) return "#f97316"    // orange
-  if (u <= 0.75) return "#eab308"   // yellow
-  return "#22c55e"                  // green
+  if (u <= 0.25) return "#ef4444"
+  if (u <= 0.5) return "#f97316"
+  if (u <= 0.75) return "#eab308"
+  return "#22c55e"
 }
