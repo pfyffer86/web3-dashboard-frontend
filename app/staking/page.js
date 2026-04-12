@@ -32,7 +32,6 @@ export default function StakingPage() {
 
       const json = await res.json()
 
-      // 🔥 CRITICAL FIX: ensure array
       if (!Array.isArray(json)) {
         console.error("INVALID RESPONSE:", json)
         setData([])
@@ -55,7 +54,6 @@ export default function StakingPage() {
 
   if (loading) return <div>Loading...</div>
 
-  // 🔥 SAFETY LAYER
   const safeData = Array.isArray(data) ? data : []
 
   /* ================= KPI ================= */
@@ -63,17 +61,15 @@ export default function StakingPage() {
   const totalStake = safeData.reduce((sum, n) => sum + (n.stake || 0), 0)
   const totalNFTs = safeData.length
 
-  const totalMaxStake = safeData.reduce((sum, n) => sum + (n.maxStake || 0), 0)
-
   return (
     <div>
 
       <h1>My Staking</h1>
 
-      {/* KPI */}
+      {/* ================= KPI GRID (IDENTISCH ZU ASSETS) ================= */}
       <div className="kpi-grid">
 
-        {/* TOTAL VALUE */}
+        {/* LEFT BIG CARD */}
         <div className="card kpi-card">
 
           <div className="kpi-header">
@@ -81,13 +77,18 @@ export default function StakingPage() {
             <IconPigMoney size={18} className="kpi-icon" />
           </div>
 
-          <div className="kpi-value">{formatAmount(totalStake)} APTM</div>
-          <div className="kpi-sub">Across all staking NFTs</div>
+          <div className="kpi-value">
+            {formatAmount(totalStake)} APTM
+          </div>
+
+          <div className="kpi-sub">
+            Across all staking positions
+          </div>
 
         </div>
 
         {/* RIGHT STACK */}
-        <div style={{ display: "grid", gap: 20 }}>
+        <div className="kpi-side">
 
           <div className="card kpi-card">
 
@@ -96,8 +97,13 @@ export default function StakingPage() {
               <IconStack2 size={18} className="kpi-icon" />
             </div>
 
-            <div className="kpi-value">{formatAmount(totalStake)}</div>
-            <div className="kpi-sub">APTM locked</div>
+            <div className="kpi-value">
+              {formatAmount(totalStake)}
+            </div>
+
+            <div className="kpi-sub">
+              APTM locked
+            </div>
 
           </div>
 
@@ -108,8 +114,13 @@ export default function StakingPage() {
               <IconHexagonLetterS size={18} className="kpi-icon" />
             </div>
 
-            <div className="kpi-value">{totalNFTs}</div>
-            <div className="kpi-sub">Membership positions</div>
+            <div className="kpi-value">
+              {totalNFTs}
+            </div>
+
+            <div className="kpi-sub">
+              Membership positions
+            </div>
 
           </div>
 
@@ -117,22 +128,26 @@ export default function StakingPage() {
 
       </div>
 
-      {/* TABLE */}
+      {/* ================= TABLE CARD (IDENTISCH ZU ASSETS) ================= */}
       <div className="card">
 
-        <h3 className="mb-16">Staking Positions</h3>
+        <div className="card-header">
+          <h3>Staking Breakdown</h3>
+        </div>
 
         <table className="table">
+
           <thead>
             <tr>
-              <th>Position</th>
-              <th>Stake</th>
-              <th>Utilization</th>
-              <th>Time Progress</th>
+              <th>ASSET</th>
+              <th>STAKE</th>
+              <th>UTILIZATION</th>
+              <th>TIME PROGRESS</th>
             </tr>
           </thead>
 
           <tbody>
+
             {safeData.map(n => {
 
               const stake = n.stake || 0
@@ -146,21 +161,23 @@ export default function StakingPage() {
               return (
                 <tr key={n.token_id}>
 
-                  {/* ICON + TIER */}
+                  {/* ICON + LABEL */}
                   <td>
-                    <div className="token">
-                      <div className="token-icon">
-                        <div className="nft-hex">
-                          <IconHexagonLetterS size={14} />
-                        </div>
+                    <div className="asset-cell">
+
+                      <div className="asset-icon">
+                        <IconHexagonLetterS size={16} />
                       </div>
 
-                      <div className="token-meta">
-                        <div>Tier {n.tier}</div>
-                        <div className="text-secondary" style={{ fontSize: 12 }}>
+                      <div className="asset-info">
+                        <div className="asset-name">
+                          Tier {n.tier}
+                        </div>
+                        <div className="asset-sub">
                           #{n.token_id}
                         </div>
                       </div>
+
                     </div>
                   </td>
 
@@ -190,7 +207,7 @@ export default function StakingPage() {
                     </div>
                   </td>
 
-                  {/* TIME PROGRESS */}
+                  {/* TIME */}
                   <td>
                     <div className="allocation">
 
@@ -214,7 +231,9 @@ export default function StakingPage() {
                 </tr>
               )
             })}
+
           </tbody>
+
         </table>
 
       </div>
@@ -237,7 +256,6 @@ function formatAmount(v) {
 }
 
 function getUtilizationColor(u) {
-
   if (u <= 0.25) return "#ef4444"
   if (u <= 0.5) return "#f97316"
   if (u <= 0.75) return "#eab308"
