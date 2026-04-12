@@ -3,9 +3,16 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabase"
 
+import {
+  IconPigMoney,
+  IconStack2,
+  IconHexagonLetterS
+} from "@tabler/icons-react"
+
 export default function StakingPage() {
 
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
 
   async function load() {
 
@@ -23,17 +30,25 @@ export default function StakingPage() {
 
     const json = await res.json()
     setData(json || [])
+    setLoading(false)
   }
 
   useEffect(() => {
     load()
   }, [])
 
+  if (loading) return <div>Loading...</div>
+
+  /* ================= KPI ================= */
+
   const totalStake = data.reduce((sum, n) => sum + n.stake, 0)
   const totalNFTs = data.length
-  const avgProgress = data.length
-  ? data.reduce((sum, n) => sum + n.progress, 0) / data.length
-  : 0
+
+  const totalMaxStake = data.reduce((sum, n) => sum + (n.maxStake || 0), 0)
+
+  const utilizationGlobal = totalMaxStake > 0
+    ? totalStake / totalMaxStake
+    : 0
 
   return (
     <div>
@@ -41,69 +56,172 @@ export default function StakingPage() {
       <h1>My Staking</h1>
 
       {/* KPI */}
-     <div className="wallet-grid mb-24">
+      <div className="kpi-grid">
 
-  <div className="card">
-    <div className="text-secondary">Total Staked</div>
-    <h2>{totalStake.toFixed(2)} APTM</h2>
-  </div>
+        {/* TOTAL VALUE */}
+        <div className="card kpi-card">
 
-  <div className="card">
-    <div className="text-secondary">Active NFTs</div>
-    <h2>{totalNFTs}</h2>
-  </div>
+          <div className="kpi-header">
+            <div className="kpi-label">Total Value Staked</div>
+            <IconPigMoney size={18} className="kpi-icon" />
+          </div>
 
-  <div className="card">
-    <div className="text-secondary">Avg Progress</div>
-    <h2>{(avgProgress * 100).toFixed(1)}%</h2>
-  </div>
+          <div className="kpi-value">{formatAmount(totalStake)} APTM</div>
+          <div className="kpi-sub">Across all staking NFTs</div>
 
-</div>
+        </div>
+
+        {/* RIGHT STACK */}
+        <div style={{ display: "grid", gap: 20 }}>
+
+          <div className="card kpi-card">
+
+            <div className="kpi-header">
+              <div className="kpi-label">Total Staked</div>
+              <IconStack2 size={18} className="kpi-icon" />
+            </div>
+
+            <div className="kpi-value">{formatAmount(totalStake)}</div>
+            <div className="kpi-sub">APTM locked</div>
+
+          </div>
+
+          <div className="card kpi-card">
+
+            <div className="kpi-header">
+              <div className="kpi-label">Tracked NFTs</div>
+              <IconHexagonLetterS size={18} className="kpi-icon" />
+            </div>
+
+            <div className="kpi-value">{totalNFTs}</div>
+            <div className="kpi-sub">Membership positions</div>
+
+          </div>
+
+        </div>
+
+      </div>
 
       {/* TABLE */}
-     <table className="table">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Tier</th>
-      <th>Stake</th>
-      <th>Utilization</th>
-      <th>Time Progress</th>
-    </tr>
-  </thead>
+      <div className="card">
 
-  <tbody>
-    {data.map(n => {
+        <h3 className="mb-16">Staking Positions</h3>
 
-      const utilization = n.maxStake > 0
-        ? n.stake / n.maxStake
-        : 0
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Stake</th>
+              <th>Utilization</th>
+              <th>Time Progress</th>
+            </tr>
+          </thead>
 
-      return (
-        <tr key={n.token_id}>
+          <tbody>
+            {data.map(n => {
 
-          <td>{n.token_id}</td>
+              const utilization = n.maxStake > 0
+                ? n.stake / n.maxStake
+                : 0
 
-          <td>Tier {n.tier}</td>
+              return (
+                <tr key={n.token_id}>
 
-          <td>{n.stake.toFixed(2)}</td>
+                  {/* ICON + TIER */}
+                  <td>
+                    <div className="token">
+                      <div className="token-icon">
+                        <div className="nft-hex">
+                          <IconHexagonLetterS size={14} />
+                        </div>
+                      </div>
 
-          {/* STAKE UTILIZATION */}
-          <td>
-            {(utilization * 100).toFixed(1)}%
-          </td>
+                      <div className="token-meta">
+                        <div>Tier {n.tier}</div>
+                        <div className="text-secondary" style={{ fontSize: 12 }}>
+                          #{n.token_id}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
 
-          {/* TIME PROGRESS */}
-          <td>
-            {(n.progress * 100).toFixed(1)}%
-          </td>
+                  {/* STAKE */}
+                  <td>
+                    {formatAmount(n.stake)} / {formatAmount(n.maxStake)}
+                  </td>
 
-        </tr>
-      )
-    })}
-  </tbody>
-</table>
+                  {/* UTILIZATION BAR */}
+                  <td>
+                    <div className="allocation">
+
+                      <div className="allocation-bar">
+                        <div
+                          className="allocation-fill"
+                          style={{
+                            width: `${utilization * 100}%`,
+                            background: getUtilizationColor(utilization)
+                          }}
+                        />
+                      </div>
+
+                      <div className="allocation-text">
+                        {(utilization * 100).toFixed(1)}%
+                      </div>
+
+                    </div>
+                  </td>
+
+                  {/* TIME PROGRESS */}
+                  <td>
+                    <div className="allocation">
+
+                      <div className="allocation-bar">
+                        <div
+                          className="allocation-fill"
+                          style={{
+                            width: `${n.progress * 100}%`,
+                            background: "var(--blue)"
+                          }}
+                        />
+                      </div>
+
+                      <div className="allocation-text">
+                        {(n.progress * 100).toFixed(1)}%
+                      </div>
+
+                    </div>
+                  </td>
+
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+
+      </div>
 
     </div>
   )
+}
+
+/* ================= HELPERS ================= */
+
+function formatAmount(v) {
+  if (!v) return "0"
+
+  if (v < 0.0001) return v.toFixed(8)
+  if (v < 1) return v.toFixed(6)
+
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 2
+  }).format(v)
+}
+
+/* 🔥 verhindert 2e+47 Anzeige */
+function getUtilizationColor(u) {
+
+  if (u <= 0.25) return "#ef4444"   // red
+  if (u <= 0.5) return "#f97316"    // orange
+  if (u <= 0.75) return "#eab308"   // yellow
+  return "#22c55e"                  // green
 }
