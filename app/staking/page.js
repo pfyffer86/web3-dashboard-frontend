@@ -55,7 +55,7 @@ export default function StakingPage() {
 
           <div className="kpi-header">
             <div className="kpi-label">Total Value in Staking</div>
-            <IconPigMoney size={18} />
+            <IconPigMoney size={18} className="kpi-icon" />
           </div>
 
           <div className="kpi-value">
@@ -73,7 +73,7 @@ export default function StakingPage() {
 
           <div className="kpi-header">
             <div className="kpi-label">Total Staked</div>
-            <IconStack2 size={18} />
+            <IconStack2 size={18} className="kpi-icon" />
           </div>
 
           <div className="kpi-value">
