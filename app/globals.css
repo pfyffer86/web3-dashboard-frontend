@@ -448,6 +448,7 @@ h3 {
   font-weight: 400;                /* 🔥 normal */
   color: var(--text-secondary);    /* behalten */
   letter-spacing: 0.04em;
+  margin-top: 8px;
 }
 
 /* ================= TABLE ================= */
