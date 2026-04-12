@@ -160,7 +160,7 @@ export default function NFTsPage() {
   return (
     <div>
 
-      <h1>My Assets</h1>
+      <h1>My NFTs</h1>
 
       {/* ADD NFT */}
       <div className="wallet-grid mb-24">
