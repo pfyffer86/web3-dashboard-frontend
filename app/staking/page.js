@@ -60,10 +60,8 @@ export default function StakingPage() {
 
       <h1>My Staking</h1>
 
-      {/* ================= KPI ================= */}
       <div className="kpi-grid">
 
-        {/* TOTAL VALUE */}
         <div className="card kpi-card">
 
           <div className="kpi-header">
@@ -76,12 +74,11 @@ export default function StakingPage() {
           </div>
 
           <div className="kpi-sub">
-            Across all membership NFTs
+            Across all Staking NFTs
           </div>
 
         </div>
 
-        {/* TOTAL STAKED */}
         <div className="card kpi-card">
 
           <div className="kpi-header">
@@ -94,7 +91,7 @@ export default function StakingPage() {
           </div>
 
           <div className="kpi-sub">
-            Across all membership NFTs
+            Across all Staking NFTs
           </div>
 
         </div>
@@ -115,11 +112,11 @@ export default function StakingPage() {
               <th>ASSET</th>
               <th>ID</th>
               <th>TIER</th>
-              <th>STAKED</th>
-              <th>MAX STAKE</th>
+              <th>STAKED APTM</th>        {/* 🔥 angepasst */}
+              <th>MAX STAKE APTM</th>     {/* 🔥 angepasst */}
               <th>UTILIZATION</th>
               <th>DURATION</th>
-              <th>TIME PROGRESS</th>
+              <th>ELAPSED</th>            {/* 🔥 angepasst */}
             </tr>
           </thead>
 
@@ -134,26 +131,22 @@ export default function StakingPage() {
               return (
                 <tr key={n.token_id}>
 
-                  {/* ICON */}
                   <td>
                     <div className="asset-icon">
                       <IconHexagonLetterS size={16} />
                     </div>
                   </td>
 
-                  {/* ID */}
                   <td>#{n.token_id}</td>
 
-                  {/* TIER */}
                   <td>Tier {n.tier}</td>
 
-                  {/* STAKED */}
-                  <td>{formatNumber(n.stake)} APTM</td>
+                  {/* 🔥 APTM entfernt */}
+                  <td>{formatNumber(n.stake)}</td>
 
-                  {/* MAX */}
-                  <td>{formatNumber(n.maxStake)} APTM</td>
+                  {/* 🔥 APTM entfernt */}
+                  <td>{formatNumber(n.maxStake)}</td>
 
-                  {/* UTILIZATION */}
                   <td>
                     <ProgressBar
                       value={utilization}
@@ -161,10 +154,8 @@ export default function StakingPage() {
                     />
                   </td>
 
-                  {/* DURATION */}
                   <td>{n.lock_years}Y</td>
 
-                  {/* TIME PROGRESS */}
                   <td>
                     <ProgressBar
                       value={n.progress}
