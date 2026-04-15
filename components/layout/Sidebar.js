@@ -11,7 +11,8 @@ import {
   IconShovel,
   IconWallet,
   IconHexagonLetterN,
-  IconSettings
+  IconSettings,
+  IconWallet
 } from "@tabler/icons-react"
 
 export default function Sidebar() {
@@ -68,6 +69,11 @@ export default function Sidebar() {
 
       {/* PORTFOLIO */}
       <div className="menu-section">Portfolio</div>
+
+      <Link href="/wallets" className={isActive("/wallets") ? "active" : ""}>
+        <IconWallet size={18} />
+        <span>Wallets</span>
+      </Link>
 
       <Link href="/assets" className={isActive("/assets") ? "active" : ""}>
         <IconCoins size={18} />
