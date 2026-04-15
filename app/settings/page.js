@@ -42,7 +42,6 @@ export default function SettingsPage() {
 
       setWallets(walletsData)
       setStaking(stakingData)
-
       setTradebots([])
 
     } catch (err) {
@@ -63,7 +62,6 @@ export default function SettingsPage() {
 
       <h1>Settings</h1>
 
-      {/* ================= STACK ================= */}
       <div className="section-stack">
 
         {/* ================= WALLET TABLE ================= */}
@@ -84,13 +82,14 @@ export default function SettingsPage() {
                 <tr key={w.id}>
 
                   <td>
-                    <div className="nft-hex">
-                      <IconWallet size={14} />
+                    <div className="token">
+                      <div className="token-icon">
+                        <IconWallet size={16} />
+                      </div>
                     </div>
                   </td>
 
                   <td>{w.label || "-"}</td>
-
                   <td>{formatAddress(w.address)}</td>
 
                 </tr>
@@ -119,17 +118,16 @@ export default function SettingsPage() {
                 <tr key={n.id}>
 
                   <td>
-                    <div className="nft-hex">
-                      <IconHexagonLetterS size={14} />
+                    <div className="token">
+                      <div className="token-icon">
+                        <IconHexagonLetterS size={16} />
+                      </div>
                     </div>
                   </td>
 
                   <td>{n.label}</td>
-
                   <td>#{n.token_id}</td>
-
                   <td>Tier {n.tier}</td>
-
                   <td>{n.lock_years} Years</td>
 
                 </tr>
