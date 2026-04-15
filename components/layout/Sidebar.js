@@ -10,7 +10,8 @@ import {
   IconRobot,
   IconShovel,
   IconWallet,
-  IconHexagonLetterN
+  IconHexagonLetterN,
+  IconSettings
 } from "@tabler/icons-react"
 
 export default function Sidebar() {
@@ -99,6 +100,11 @@ export default function Sidebar() {
       <Link href="/nfts" className={isActive("/nfts") ? "active" : ""}>
         <IconHexagonLetterN size={18} />
         <span>NFTs</span>
+      </Link>
+
+      <Link href="/settings" className={isActive("/settings") ? "active" : ""}>
+        <IconSettings size={18} />
+        <span>Settings</span>
       </Link>
 
     </div>
