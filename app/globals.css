@@ -1247,20 +1247,21 @@ SETTINGS PAGE
 }
 
 .btn-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-
   background: rgba(59,130,246,0.1);
-  border: 1px solid rgba(59,130,246,0.2);
+  border: 1px solid rgba(59,130,246,0.25);
+  color: #3b82f6;   /* 🔥 wichtig */
+  transition: all 0.2s ease;
 }
 
 .btn-icon:hover {
   background: rgba(59,130,246,0.2);
+  color: #ffffff;   /* optional: weiß beim hover */
 }
 
 .actions {
@@ -1268,6 +1269,8 @@ SETTINGS PAGE
   gap: 10px;
   justify-content: flex-end;
   opacity: 0.7;
+  align-items: center;     /* 🔥 FIX */
+  height: 100%;            /* optional stabilisiert */
 }
 
 .actions svg {
