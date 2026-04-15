@@ -1231,3 +1231,20 @@ MINIMAL INVASIVE PATCH
 .card + .card {
   margin-top: 24px;
 }
+
+/* =====================================================
+CARD GRID HEIGHT FIX (GLOBAL)
+===================================================== */
+
+.wallet-grid,
+.kpi-grid {
+  align-items: stretch; /* 🔥 sorgt für gleiche Höhe */
+}
+
+.wallet-grid .card,
+.kpi-grid .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* optional: zentriert Inhalt sauber */
+}
