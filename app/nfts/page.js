@@ -9,7 +9,10 @@ import {
   IconRobot,
   IconShovel,
   IconPencil,
-  IconTrash
+  IconTrash,
+  IconHexagonLetterS,
+  IconHexagonLetterT,
+  IconHexagonLetterM
 } from "@tabler/icons-react"
 
 export default function NFTsPage() {
@@ -62,6 +65,22 @@ export default function NFTsPage() {
   useEffect(() => {
     loadNFTs()
   }, [])
+
+  /* ================= HELPERS ================= */
+
+  function getIcon(type) {
+    if (type === "membership") return <IconHexagonLetterS size={18} />
+    if (type === "tradebot") return <IconHexagonLetterT size={18} />
+    if (type === "minebot") return <IconHexagonLetterM size={18} />
+    return null
+  }
+
+  function getLabel(type) {
+    if (type === "membership") return "Staking"
+    if (type === "tradebot") return "TradeBot"
+    if (type === "minebot") return "MineBot"
+    return "-"
+  }
 
   const memberships = nfts.filter(n => n.type === "membership")
 
@@ -164,12 +183,12 @@ export default function NFTsPage() {
       <h1>My NFTs</h1>
 
       {/* ADD NFT */}
-      <div className="wallet-grid mb-24">
+      <div className="wallet-grid mb-32">
 
         <div className="card add-wallet-card" onClick={openAdd}>
           <IconPlus size={26} />
           <IconStack2 size={20} />
-          <div>Add Membership NFT</div>
+          <div>Add Staking NFT</div>
         </div>
 
         <div className="card add-wallet-card disabled">
@@ -186,13 +205,14 @@ export default function NFTsPage() {
 
       </div>
 
-      {/* MEMBERSHIPS */}
+      {/* TABLE */}
       <div className="card">
-        <h3 className="mb-16">Memberships</h3>
+        <h3 className="mb-16">NFT Overview</h3>
 
         <table className="table">
           <thead>
             <tr>
+              <th>NFT</th>
               <th>Token ID</th>
               <th>Tier</th>
               <th>Lock</th>
@@ -203,9 +223,17 @@ export default function NFTsPage() {
           <tbody>
             {memberships.map(n => (
               <tr key={n.id}>
-                <td>{n.token_id}</td>
+
+                <td style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  {getIcon(n.type)}
+                  {getLabel(n.type)}
+                </td>
+
+                <td>#{n.token_id}</td>
+
                 <td>Tier {n.tier}</td>
-                <td>{n.lock_years}y</td>
+
+                <td>{n.lock_years} Years</td>
 
                 <td>
                   <div style={{ display: "flex", gap: 10 }}>
@@ -214,7 +242,6 @@ export default function NFTsPage() {
                       className="action-icon"
                       onClick={() => openEdit(n)}
                     />
-
                     <IconTrash
                       size={18}
                       className="action-icon delete"
@@ -222,66 +249,21 @@ export default function NFTsPage() {
                     />
                   </div>
                 </td>
+
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* TRADEBOTS */}
-      <div className="card mt-24">
-        <h3 className="mb-16">TradeBots</h3>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Token ID</th>
-              <th>Status</th>
-              <th>Settings</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td colSpan="3" className="text-secondary">
-                Coming soon
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      {/* MINEBOTS */}
-      <div className="card mt-24">
-        <h3 className="mb-16">MineBots</h3>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Token ID</th>
-              <th>Status</th>
-              <th>Settings</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td colSpan="3" className="text-secondary">
-                Coming soon
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      {/* MODAL */}
+      {/* MODAL bleibt unverändert */}
       {modal && (
         <div className="modal-overlay">
           <div className="modal">
 
             {modal !== "delete" && (
               <>
-                <h3>{modal === "add" ? "Add Membership NFT" : "Edit NFT"}</h3>
+                <h3>{modal === "add" ? "Add NFT" : "Edit NFT"}</h3>
 
                 <input
                   placeholder="Token ID"
