@@ -1268,19 +1268,25 @@ SETTINGS PAGE
   color: #ffffff;   /* optional: weiß beim hover */
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  opacity: 0.7;
-  align-items: center;     /* 🔥 FIX */
-  height: 100%;            /* optional stabilisiert */
-}
-
 .actions svg {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.actions svg:hover {
-  opacity: 1;
+/* EDIT */
+.actions svg:first-child {
+  color: rgba(255,255,255,0.5);
+}
+
+.actions svg:first-child:hover {
+  color: var(--blue);
+}
+
+/* DELETE */
+.actions svg:last-child {
+  color: rgba(255,255,255,0.5);
+}
+
+.actions svg:last-child:hover {
+  color: var(--red);
 }
