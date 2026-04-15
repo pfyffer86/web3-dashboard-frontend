@@ -26,7 +26,8 @@ export default function NFTsPage() {
     lock_years: 1
   })
 
-  // ===== LOAD =====
+  /* ================= LOAD ================= */
+
   async function loadNFTs() {
 
     try {
@@ -64,7 +65,7 @@ export default function NFTsPage() {
 
   const memberships = nfts.filter(n => n.type === "membership")
 
-  // ===== ACTIONS =====
+  /* ================= ACTIONS ================= */
 
   function openAdd() {
     setForm({ token_id: "", tier: 1, lock_years: 1 })
@@ -185,86 +186,93 @@ export default function NFTsPage() {
 
       </div>
 
-      {/* MEMBERSHIP TABLE */}
-      <h3>Memberships</h3>
+      {/* MEMBERSHIPS */}
+      <div className="card">
+        <h3 className="mb-16">Memberships</h3>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Token ID</th>
-            <th>Tier</th>
-            <th>Lock</th>
-            <th>Settings</th>
-          </tr>
-        </thead>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Token ID</th>
+              <th>Tier</th>
+              <th>Lock</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {memberships.map(n => (
-            <tr key={n.id}>
-              <td>{n.token_id}</td>
-              <td>Tier {n.tier}</td>
-              <td>{n.lock_years}y</td>
+          <tbody>
+            {memberships.map(n => (
+              <tr key={n.id}>
+                <td>{n.token_id}</td>
+                <td>Tier {n.tier}</td>
+                <td>{n.lock_years}y</td>
 
-              <td>
-                <div style={{ display: "flex", gap: 10 }}>
+                <td>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <IconPencil
+                      size={18}
+                      className="action-icon"
+                      onClick={() => openEdit(n)}
+                    />
 
-                  <IconPencil
-                    size={18}
-                    className="action-icon"
-                    onClick={() => openEdit(n)}
-                  />
+                    <IconTrash
+                      size={18}
+                      className="action-icon delete"
+                      onClick={() => openDelete(n)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-                  <IconTrash
-                    size={18}
-                    className="action-icon delete"
-                    onClick={() => openDelete(n)}
-                  />
+      {/* TRADEBOTS */}
+      <div className="card mt-24">
+        <h3 className="mb-16">TradeBots</h3>
 
-                </div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Token ID</th>
+              <th>Status</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colSpan="3" className="text-secondary">
+                Coming soon
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
 
-      {/* PLACEHOLDERS */}
-      <h3 className="mt-24">TradeBots</h3>
+      {/* MINEBOTS */}
+      <div className="card mt-24">
+        <h3 className="mb-16">MineBots</h3>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Token ID</th>
-            <th>Status</th>
-            <th>Settings</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colSpan="3" className="text-secondary">
-              Coming soon
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Token ID</th>
+              <th>Status</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
 
-      <h3 className="mt-24">MineBots</h3>
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Token ID</th>
-            <th>Status</th>
-            <th>Settings</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colSpan="3" className="text-secondary">
-              Coming soon
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr>
+              <td colSpan="3" className="text-secondary">
+                Coming soon
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       {/* MODAL */}
       {modal && (
