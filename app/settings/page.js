@@ -6,7 +6,10 @@ import { supabase } from "../../lib/supabase"
 import {
   IconWallet,
   IconHexagonLetterS,
-  IconRobot
+  IconRobot,
+  IconPlus,
+  IconPencil,
+  IconTrash
 } from "@tabler/icons-react"
 
 export default function SettingsPage() {
@@ -66,7 +69,13 @@ export default function SettingsPage() {
 
         {/* ================= WALLET TABLE ================= */}
         <div className="card">
-          <h3 className="mb-16">Wallets</h3>
+
+          <div className="card-header">
+            <h3>Wallets</h3>
+            <button className="btn-icon">
+              <IconPlus size={18} />
+            </button>
+          </div>
 
           <table className="table">
             <thead>
@@ -74,6 +83,7 @@ export default function SettingsPage() {
                 <th>Wallet</th>
                 <th>Label</th>
                 <th>Address</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -92,6 +102,11 @@ export default function SettingsPage() {
                   <td>{w.label || "-"}</td>
                   <td>{formatAddress(w.address)}</td>
 
+                  <td className="actions">
+                    <IconPencil size={16} />
+                    <IconTrash size={16} />
+                  </td>
+
                 </tr>
               ))}
             </tbody>
@@ -100,7 +115,13 @@ export default function SettingsPage() {
 
         {/* ================= STAKING TABLE ================= */}
         <div className="card">
-          <h3 className="mb-16">Staking Memberships</h3>
+
+          <div className="card-header">
+            <h3>Staking Memberships</h3>
+            <button className="btn-icon">
+              <IconPlus size={18} />
+            </button>
+          </div>
 
           <table className="table">
             <thead>
@@ -110,6 +131,7 @@ export default function SettingsPage() {
                 <th>Token ID</th>
                 <th>Tier</th>
                 <th>Lock</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -130,6 +152,11 @@ export default function SettingsPage() {
                   <td>Tier {n.tier}</td>
                   <td>{n.lock_years} Years</td>
 
+                  <td className="actions">
+                    <IconPencil size={16} />
+                    <IconTrash size={16} />
+                  </td>
+
                 </tr>
               ))}
             </tbody>
@@ -138,7 +165,13 @@ export default function SettingsPage() {
 
         {/* ================= TRADEBOT TABLE ================= */}
         <div className="card">
-          <h3 className="mb-16">Tradebots</h3>
+
+          <div className="card-header">
+            <h3>Tradebots</h3>
+            <button className="btn-icon">
+              <IconPlus size={18} />
+            </button>
+          </div>
 
           <table className="table">
             <thead>
@@ -146,13 +179,14 @@ export default function SettingsPage() {
                 <th>NFT</th>
                 <th>Label</th>
                 <th>Token ID</th>
+                <th></th>
               </tr>
             </thead>
 
             <tbody>
               {tradebots.length === 0 && (
                 <tr>
-                  <td colSpan="3" style={{ opacity: 0.6 }}>
+                  <td colSpan="4" style={{ opacity: 0.6 }}>
                     No tradebots yet
                   </td>
                 </tr>
