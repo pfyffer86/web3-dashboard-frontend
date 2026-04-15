@@ -76,7 +76,12 @@ export default function SettingsPage() {
     }
 
     if (type === "staking") {
-      setForm({ token_id: "", tier: 1, lock_years: 1, label: "" })
+      setForm({
+        label: "",
+        token_id: "",
+        tier: 1,
+        lock_years: 1
+      })
     }
 
     setModal("add")
@@ -96,10 +101,10 @@ export default function SettingsPage() {
 
     if (type === "staking") {
       setForm({
+        label: data.label || "",
         token_id: data.token_id,
         tier: data.tier,
-        lock_years: data.lock_years,
-        label: data.label || ""
+        lock_years: data.lock_years
       })
     }
 
@@ -140,7 +145,8 @@ export default function SettingsPage() {
           Authorization: "Bearer " + token
         },
         body: JSON.stringify({
-          ...form,
+          label: form.label,
+          token_id: Number(form.token_id),
           tier: Number(form.tier),
           lock_years: Number(form.lock_years)
         })
@@ -177,9 +183,9 @@ export default function SettingsPage() {
           Authorization: "Bearer " + token
         },
         body: JSON.stringify({
+          label: form.label,
           tier: Number(form.tier),
-          lock_years: Number(form.lock_years),
-          label: form.label
+          lock_years: Number(form.lock_years)
         })
       })
     }
@@ -218,119 +224,123 @@ export default function SettingsPage() {
 
       <h1>Settings</h1>
 
-      {/* ================= WALLET TABLE ================= */}
-      <div className="card mb-24">
-        <h3 className="mb-16">Wallets</h3>
+      <div className="section-stack">
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Wallet</th>
-              <th>Label</th>
-              <th>Address</th>
-              <th>Settings</th>
-            </tr>
-          </thead>
+        {/* ================= WALLET TABLE ================= */}
+        <div className="card">
+          <h3 className="mb-16">Wallets</h3>
 
-          <tbody>
-            {wallets.map(w => (
-              <tr key={w.id}>
-
-                <td>
-                  <div className="asset-icon">
-                    <IconWallet size={16} />
-                  </div>
-                </td>
-
-                <td>{w.label || "-"}</td>
-                <td>{formatAddress(w.address)}</td>
-
-                <td>
-                  <div style={{ display: "flex", gap: 10 }}>
-                    <IconPencil className="action-icon" onClick={() => openEdit("wallet", w)} />
-                    <IconTrash className="action-icon delete" onClick={() => openDelete("wallet", w)} />
-                  </div>
-                </td>
-
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Wallet</th>
+                <th>Label</th>
+                <th>Address</th>
+                <th>Settings</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
 
-        <button className="button-primary mt-16" onClick={() => openAdd("wallet")}>
-          <IconPlus size={16} /> Add Wallet
-        </button>
-      </div>
+            <tbody>
+              {wallets.map(w => (
+                <tr key={w.id}>
 
-      {/* ================= STAKING TABLE ================= */}
-      <div className="card mb-24">
-        <h3 className="mb-16">Staking Memberships</h3>
+                  <td>
+                    <div className="asset-icon">
+                      <IconWallet size={16} />
+                    </div>
+                  </td>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>NFT</th>
-              <th>Label</th>
-              <th>Token ID</th>
-              <th>Tier</th>
-              <th>Lock</th>
-              <th>Settings</th>
-            </tr>
-          </thead>
+                  <td>{w.label || "-"}</td>
+                  <td>{formatAddress(w.address)}</td>
 
-          <tbody>
-            {staking.map(n => (
-              <tr key={n.id}>
+                  <td>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <IconPencil className="action-icon" onClick={() => openEdit("wallet", w)} />
+                      <IconTrash className="action-icon delete" onClick={() => openDelete("wallet", w)} />
+                    </div>
+                  </td>
 
-                <td>
-                  <div className="asset-icon">
-                    <IconHexagonLetterS size={16} />
-                  </div>
-                </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-                <td>{n.label}</td>
-                <td>#{n.token_id}</td>
-                <td>Tier {n.tier}</td>
-                <td>{n.lock_years} Years</td>
+          <button className="button-primary mt-16" onClick={() => openAdd("wallet")}>
+            <IconPlus size={16} /> Add Wallet
+          </button>
+        </div>
 
-                <td>
-                  <div style={{ display: "flex", gap: 10 }}>
-                    <IconPencil className="action-icon" onClick={() => openEdit("staking", n)} />
-                    <IconTrash className="action-icon delete" onClick={() => openDelete("staking", n)} />
-                  </div>
-                </td>
+        {/* ================= STAKING TABLE ================= */}
+        <div className="card">
+          <h3 className="mb-16">Staking Memberships</h3>
 
+          <table className="table">
+            <thead>
+              <tr>
+                <th>NFT</th>
+                <th>Label</th>
+                <th>Token ID</th>
+                <th>Tier</th>
+                <th>Lock</th>
+                <th>Settings</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
 
-        <button className="button-primary mt-16" onClick={() => openAdd("staking")}>
-          <IconPlus size={16} /> Add Staking NFT
-        </button>
-      </div>
+            <tbody>
+              {staking.map(n => (
+                <tr key={n.id}>
 
-      {/* ================= TRADEBOT TABLE ================= */}
-      <div className="card">
-        <h3 className="mb-16">Tradebots</h3>
+                  <td>
+                    <div className="asset-icon">
+                      <IconHexagonLetterS size={16} />
+                    </div>
+                  </td>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>NFT</th>
-              <th>Label</th>
-              <th>Token ID</th>
-            </tr>
-          </thead>
+                  <td>{n.label}</td>
+                  <td>#{n.token_id}</td>
+                  <td>Tier {n.tier}</td>
+                  <td>{n.lock_years} Years</td>
 
-          <tbody>
-            <tr>
-              <td colSpan="3" style={{ opacity: 0.6 }}>
-                No tradebots yet
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <td>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <IconPencil className="action-icon" onClick={() => openEdit("staking", n)} />
+                      <IconTrash className="action-icon delete" onClick={() => openDelete("staking", n)} />
+                    </div>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <button className="button-primary mt-16" onClick={() => openAdd("staking")}>
+            <IconPlus size={16} /> Add Membership
+          </button>
+        </div>
+
+        {/* ================= TRADEBOT TABLE ================= */}
+        <div className="card">
+          <h3 className="mb-16">Tradebots</h3>
+
+          <table className="table">
+            <thead>
+              <tr>
+                <th>NFT</th>
+                <th>Label</th>
+                <th>Token ID</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td colSpan="3" style={{ opacity: 0.6 }}>
+                  No tradebots yet
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
 
       {/* ================= MODAL ================= */}
@@ -360,16 +370,38 @@ export default function SettingsPage() {
                 {context === "staking" && (
                   <>
                     <input
+                      placeholder="Label"
+                      value={form.label}
+                      onChange={e => setForm({ ...form, label: e.target.value })}
+                    />
+
+                    <input
                       placeholder="Token ID"
                       value={form.token_id}
                       disabled={modal === "edit"}
                       onChange={e => setForm({ ...form, token_id: e.target.value })}
                     />
-                    <input
-                      placeholder="Label"
-                      value={form.label}
-                      onChange={e => setForm({ ...form, label: e.target.value })}
-                    />
+
+                    <select
+                      value={form.tier}
+                      onChange={e => setForm({ ...form, tier: Number(e.target.value) })}
+                    >
+                      {[...Array(10)].map((_, i) => (
+                        <option key={i} value={i + 1}>
+                          Tier {i + 1}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select
+                      value={form.lock_years}
+                      onChange={e => setForm({ ...form, lock_years: Number(e.target.value) })}
+                    >
+                      <option value={1}>1 Year</option>
+                      <option value={2}>2 Years</option>
+                      <option value={3}>3 Years</option>
+                      <option value={4}>4 Years</option>
+                    </select>
                   </>
                 )}
 
