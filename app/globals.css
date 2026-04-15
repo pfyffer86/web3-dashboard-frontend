@@ -1205,3 +1205,12 @@ LOGIN PAGE
   font-size: 14px;
   font-weight: 600;
 }
+
+/* =============================
+SECTION STACK (GLOBAL SPACING FIX)
+============================= */
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
