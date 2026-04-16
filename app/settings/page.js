@@ -6,8 +6,9 @@ import { supabase } from "../../lib/supabase"
 import {
   IconPlus,
   IconWallet,
-  IconHexagonLetterS,
+  IconStack2,
   IconRobot,
+  IconShovel,
   IconPencil,
   IconTrash
 } from "@tabler/icons-react"
@@ -324,7 +325,7 @@ export default function SettingsPage() {
             <tbody>
               {staking.map(n => (
                 <tr key={n.id}>
-                  <td><div className="asset-icon"><IconHexagonLetterS size={16} /></div></td>
+                  <td><div className="asset-icon"><IconStack2 size={16} /></div></td>
                   <td>{n.label}</td>
                   <td>#{n.token_id}</td>
                   <td>Tier {n.tier}</td>
