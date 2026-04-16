@@ -133,7 +133,7 @@ export default function StakingPage() {
 
                   <td>
                     <div className="asset-icon">
-                      <IconHexagonLetterS size={16} />
+                      <IconStack2 size={16} />
                     </div>
                   </td>
 
