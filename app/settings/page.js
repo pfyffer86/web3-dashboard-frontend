@@ -185,28 +185,39 @@ export default function SettingsPage() {
       <h1>Settings</h1>
 
       {/* KPI */}
-      <div className="kpi-grid mb-24">
-        <div className="card kpi-card">
-          <div className="asset-icon"><IconWallet size={18} /></div>
-          <h2>{wallets.length}</h2>
-          <p>Total Wallets</p>
-          <span>In Portfolio</span>
-        </div>
+<div className="kpi-grid">
 
-        <div className="card kpi-card">
-          <div className="asset-icon"><IconStack2 size={18} /></div>
-          <h2>{staking.length}</h2>
-          <p>Total Memberships</p>
-          <span>In Portfolio</span>
-        </div>
+  <div className="card kpi-card">
+    <div className="kpi-header">
+      <div className="kpi-label">Total Wallets</div>
+      <IconWallet size={18} className="kpi-icon" />
+    </div>
 
-        <div className="card kpi-card">
-          <div className="asset-icon"><IconRobot size={18} /></div>
-          <h2>{tradebots.length}</h2>
-          <p>Total Tradebots</p>
-          <span>In Portfolio</span>
-        </div>
-      </div>
+    <div className="kpi-value">{wallets.length}</div>
+    <div className="kpi-sub">In Portfolio</div>
+  </div>
+
+  <div className="card kpi-card">
+    <div className="kpi-header">
+      <div className="kpi-label">Total Memberships</div>
+      <IconStack2 size={18} className="kpi-icon" />
+    </div>
+
+    <div className="kpi-value">{staking.length}</div>
+    <div className="kpi-sub">In Portfolio</div>
+  </div>
+
+  <div className="card kpi-card">
+    <div className="kpi-header">
+      <div className="kpi-label">Total Tradebots</div>
+      <IconRobot size={18} className="kpi-icon" />
+    </div>
+
+    <div className="kpi-value">{tradebots.length}</div>
+    <div className="kpi-sub">In Portfolio</div>
+  </div>
+
+</div>
 
       <div className="section-stack">
 
