@@ -25,17 +25,15 @@ export default function Sidebar() {
 
       {/* LOGO */}
       <div className="logo">
-      <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+     <svg viewBox="0 0 180 180" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="gSq" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gSq_logo" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stopColor="#00f0ff" />
       <stop offset="100%" stopColor="#7a5cff" />
     </linearGradient>
   </defs>
 
-  <rect width="180" height="180" rx="18" fill="#07090f" />
-
-  <g stroke="url(#gSq)" strokeWidth="4.5" fill="none">
+  <g stroke="url(#gSq_logo)" strokeWidth="4.5" fill="none">
     <path d="M55 95 Q40 75 55 55 Q70 35 90 55 Q110 75 90 95 Q70 115 55 95" />
     <path d="M90 95 Q75 75 90 55 Q105 35 125 55 Q145 75 125 95 Q105 115 90 95" />
     <line x1="70" y1="75" x2="110" y2="75" />
@@ -45,7 +43,7 @@ export default function Sidebar() {
     <text x="90" y="130" fontSize="12" fill="#9aa" letterSpacing="3">
       MY
     </text>
-    <text x="90" y="155" fontSize="22" fill="url(#gSq)" letterSpacing="3">
+    <text x="90" y="155" fontSize="22" fill="url(#gSq_logo)" letterSpacing="3">
       APERTUM
     </text>
   </g>
