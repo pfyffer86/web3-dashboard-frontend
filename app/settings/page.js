@@ -390,8 +390,129 @@ export default function SettingsPage() {
 
       </div>
 
-      {/* MODAL bleibt exakt wie zuvor (inkl. Erweiterung tradebot) */}
+{/* ================= MODAL ================= */}
+{modal && (
+  <div className="modal-overlay">
+    <div className="modal">
+
+      {/* ADD / EDIT */}
+      {modal !== "delete" && (
+        <>
+          <h3>{modal === "add" ? "Add" : "Edit"}</h3>
+
+          {/* WALLET */}
+          {context === "wallet" && (
+            <>
+              <input
+                placeholder="Label"
+                value={form.label}
+                onChange={e => setForm({ ...form, label: e.target.value })}
+              />
+
+              <input
+                placeholder="Address"
+                value={form.address}
+                onChange={e => setForm({ ...form, address: e.target.value })}
+              />
+            </>
+          )}
+
+          {/* STAKING */}
+          {context === "staking" && (
+            <>
+              <input
+                placeholder="Label"
+                value={form.label}
+                onChange={e => setForm({ ...form, label: e.target.value })}
+              />
+
+              <input
+                placeholder="Token ID"
+                value={form.token_id}
+                disabled={modal === "edit"}
+                onChange={e => setForm({ ...form, token_id: e.target.value })}
+              />
+
+              <select
+                value={form.tier}
+                onChange={e => setForm({ ...form, tier: Number(e.target.value) })}
+              >
+                {[...Array(10)].map((_, i) => (
+                  <option key={i} value={i + 1}>
+                    Tier {i + 1}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={form.lock_years}
+                onChange={e => setForm({ ...form, lock_years: Number(e.target.value) })}
+              >
+                <option value={1}>1 Year</option>
+                <option value={2}>2 Years</option>
+                <option value={3}>3 Years</option>
+                <option value={4}>4 Years</option>
+              </select>
+            </>
+          )}
+
+          {/* TRADEBOT */}
+          {context === "tradebot" && (
+            <>
+              <input
+                placeholder="Label"
+                value={form.label}
+                onChange={e => setForm({ ...form, label: e.target.value })}
+              />
+
+              <input
+                placeholder="Token ID"
+                value={form.token_id}
+                disabled={modal === "edit"}
+                onChange={e => setForm({ ...form, token_id: e.target.value })}
+              />
+            </>
+          )}
+
+          <div className="modal-actions">
+            <button className="button-secondary" onClick={() => setModal(null)}>
+              Cancel
+            </button>
+
+            <button
+              className="button-primary"
+              onClick={modal === "add" ? handleAdd : handleEdit}
+            >
+              Save
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* DELETE */}
+      {modal === "delete" && (
+        <>
+          <h3>Delete</h3>
+
+          <p className="text-secondary">
+            Are you sure you want to delete this entry?
+          </p>
+
+          <div className="modal-actions">
+            <button className="button-secondary" onClick={() => setModal(null)}>
+              Cancel
+            </button>
+
+            <button className="button-danger" onClick={handleDelete}>
+              Delete
+            </button>
+          </div>
+        </>
+      )}
+
     </div>
+  </div>
+)}    </div>
   )
 }
 
