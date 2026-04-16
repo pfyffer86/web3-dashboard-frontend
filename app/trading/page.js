@@ -109,7 +109,7 @@ export default function TradingPage() {
               <th>ASSET</th>
               <th>ID</th>
               <th>LABEL</th>
-              <th>CAPITAL (wUSDT)</th>
+              <th>wUSDT IN VAULT (uncompounded)</th>
               <th>STATUS</th>
             </tr>
           </thead>
@@ -142,7 +142,7 @@ export default function TradingPage() {
                         background: isLoaded ? "var(--green)" : "var(--red)"
                       }}
                     >
-                      {isLoaded ? "Vault Loaded" : "Unloaded"}
+                      {isLoaded ? "Vault Loaded" : "Vault Unloaded"}
                     </div>
                   </td>
 
