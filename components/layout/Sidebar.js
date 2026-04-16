@@ -25,45 +25,6 @@ export default function Sidebar() {
 
       {/* LOGO */}
       <div className="logo">
-       <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-
-  <defs>
-    <linearGradient id="gSq" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00f0ff"/>
-      <stop offset="100%" stop-color="#7a5cff"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Background -->
-  <rect width="180" height="180" rx="18" fill="#07090f"/>
-
-  <!-- Chain Symbol (centered) -->
-  <g stroke="url(#gSq)" stroke-width="4.5" fill="none">
-    <path d="M55 95 Q40 75 55 55 Q70 35 90 55 Q110 75 90 95 Q70 115 55 95"/>
-    <path d="M90 95 Q75 75 90 55 Q105 35 125 55 Q145 75 125 95 Q105 115 90 95"/>
-    <line x1="70" y1="75" x2="110" y2="75"/>
-  </g>
-
-  <!-- Text block -->
-  <g font-family="Eurostile, Arial Black, sans-serif" text-anchor="middle">
-    
-    <text x="90" y="130"
-          font-size="12"
-          fill="#9aa"
-          letter-spacing="3">
-      MY
-    </text>
-
-    <text x="90" y="155"
-          font-size="22"
-          fill="url(#gSq)"
-          letter-spacing="3">
-      APERTUM
-    </text>
-
-  </g>
-
-</svg>
       </div>
 
       {/* OVERVIEW */}
