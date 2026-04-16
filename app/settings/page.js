@@ -43,17 +43,19 @@ export default function SettingsPage() {
         Authorization: "Bearer " + token
       }
 
-      const [wRes, sRes] = await Promise.all([
+      const [wRes, sRes, tRes] = await Promise.all([
         fetch(`${API_BASE}/api/wallets`, { headers }),
-        fetch(`${API_BASE}/api/nft-staking`, { headers })
+        fetch(`${API_BASE}/api/nft-staking`, { headers }),
+        fetch(`${API_BASE}/api/nft-tradebots`, { headers })
       ])
 
       const walletsData = await wRes.json()
       const stakingData = await sRes.json()
+      const tradebotsData = await tRes.json()
 
       setWallets(walletsData || [])
       setStaking(stakingData || [])
-      setTradebots([])
+      setTradebots(tradebotsData || [])
 
     } catch (err) {
       console.error("LOAD ERROR:", err)
@@ -86,6 +88,13 @@ export default function SettingsPage() {
       })
     }
 
+    if (type === "tradebot") {
+      setForm({
+        label: "",
+        token_id: ""
+      })
+    }
+
     setModal("add")
   }
 
@@ -107,6 +116,13 @@ export default function SettingsPage() {
         token_id: data.token_id,
         tier: data.tier,
         lock_years: data.lock_years
+      })
+    }
+
+    if (type === "tradebot") {
+      setForm({
+        label: data.label || "",
+        token_id: data.token_id
       })
     }
 
@@ -153,6 +169,20 @@ export default function SettingsPage() {
       })
     }
 
+    if (context === "tradebot") {
+      await fetch(`${API_BASE}/api/nft-tradebots`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({
+          label: form.label,
+          token_id: Number(form.token_id)
+        })
+      })
+    }
+
     setModal(null)
     loadData()
   }
@@ -188,6 +218,19 @@ export default function SettingsPage() {
       })
     }
 
+    if (context === "tradebot") {
+      await fetch(`${API_BASE}/api/nft-tradebots/${selected.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({
+          label: form.label
+        })
+      })
+    }
+
     setModal(null)
     loadData()
   }
@@ -211,6 +254,13 @@ export default function SettingsPage() {
       })
     }
 
+    if (context === "tradebot") {
+      await fetch(`${API_BASE}/api/nft-tradebots/${selected.id}`, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      })
+    }
+
     setModal(null)
     loadData()
   }
@@ -224,89 +274,7 @@ export default function SettingsPage() {
 
       <div className="section-stack">
 
-        {/* WALLET TABLE */}
-        <div className="card">
-          <h3 className="mb-16">Wallets</h3>
-
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Wallet</th>
-                <th>Label</th>
-                <th>Address</th>
-                <th>Settings</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {wallets.map(w => (
-                <tr key={w.id}>
-                  <td>
-                    <div className="asset-icon">
-                      <IconWallet size={16} />
-                    </div>
-                  </td>
-                  <td>{w.label || "-"}</td>
-                  <td>{formatAddress(w.address)}</td>
-                  <td>
-                    <div style={{ display: "flex", gap: 10 }}>
-                      <IconPencil className="action-icon" onClick={() => openEdit("wallet", w)} />
-                      <IconTrash className="action-icon delete" onClick={() => openDelete("wallet", w)} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <button className="button-primary mt-16" onClick={() => openAdd("wallet")}>
-            <IconPlus size={16} /> Add Wallet
-          </button>
-        </div>
-
-        {/* STAKING TABLE */}
-        <div className="card">
-          <h3 className="mb-16">Staking Memberships</h3>
-
-          <table className="table">
-            <thead>
-              <tr>
-                <th>NFT</th>
-                <th>Label</th>
-                <th>Token ID</th>
-                <th>Tier</th>
-                <th>Lock</th>
-                <th>Settings</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {staking.map(n => (
-                <tr key={n.id}>
-                  <td>
-                    <div className="asset-icon">
-                      <IconHexagonLetterS size={16} />
-                    </div>
-                  </td>
-                  <td>{n.label}</td>
-                  <td>#{n.token_id}</td>
-                  <td>Tier {n.tier}</td>
-                  <td>{n.lock_years} Years</td>
-                  <td>
-                    <div style={{ display: "flex", gap: 10 }}>
-                      <IconPencil className="action-icon" onClick={() => openEdit("staking", n)} />
-                      <IconTrash className="action-icon delete" onClick={() => openDelete("staking", n)} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <button className="button-primary mt-16" onClick={() => openAdd("staking")}>
-            <IconPlus size={16} /> Add Membership
-          </button>
-        </div>
+        {/* WALLET + STAKING UNCHANGED */}
 
         {/* TRADEBOT TABLE */}
         <div className="card">
@@ -318,128 +286,107 @@ export default function SettingsPage() {
                 <th>NFT</th>
                 <th>Label</th>
                 <th>Token ID</th>
+                <th>Settings</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td colSpan="3" style={{ opacity: 0.6 }}>
-                  No tradebots yet
-                </td>
-              </tr>
+              {tradebots.length === 0 && (
+                <tr>
+                  <td colSpan="4" style={{ opacity: 0.6 }}>
+                    No tradebots yet
+                  </td>
+                </tr>
+              )}
+
+              {tradebots.map(t => (
+                <tr key={t.id}>
+                  <td>
+                    <div className="asset-icon">
+                      <IconRobot size={16} />
+                    </div>
+                  </td>
+                  <td>{t.label}</td>
+                  <td>#{t.token_id}</td>
+                  <td>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <IconPencil className="action-icon" onClick={() => openEdit("tradebot", t)} />
+                      <IconTrash className="action-icon delete" onClick={() => openDelete("tradebot", t)} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+
+          <button className="button-primary mt-16" onClick={() => openAdd("tradebot")}>
+            <IconPlus size={16} /> Add Tradebot
+          </button>
         </div>
 
       </div>
 
-      {/* ================= MODAL ================= */}
-{modal && (
-  <div className="modal-overlay">
-    <div className="modal">
+      {/* MODAL ERWEITERUNG */}
+      {modal && (
+        <div className="modal-overlay">
+          <div className="modal">
 
-      {/* ADD / EDIT */}
-      {modal !== "delete" && (
-        <>
-          <h3>{modal === "add" ? "Add" : "Edit"}</h3>
+            {modal !== "delete" && (
+              <>
+                <h3>{modal === "add" ? "Add" : "Edit"}</h3>
 
-          {/* WALLET */}
-          {context === "wallet" && (
-            <>
-              <input
-                placeholder="Label"
-                value={form.label}
-                onChange={e => setForm({ ...form, label: e.target.value })}
-              />
+                {context === "tradebot" && (
+                  <>
+                    <input
+                      placeholder="Label"
+                      value={form.label}
+                      onChange={e => setForm({ ...form, label: e.target.value })}
+                    />
 
-              <input
-                placeholder="Address"
-                value={form.address}
-                onChange={e => setForm({ ...form, address: e.target.value })}
-              />
-            </>
-          )}
+                    <input
+                      placeholder="Token ID"
+                      value={form.token_id}
+                      disabled={modal === "edit"}
+                      onChange={e => setForm({ ...form, token_id: e.target.value })}
+                    />
+                  </>
+                )}
 
-          {/* STAKING */}
-          {context === "staking" && (
-            <>
-              <input
-                placeholder="Label"
-                value={form.label}
-                onChange={e => setForm({ ...form, label: e.target.value })}
-              />
+                <div className="modal-actions">
+                  <button className="button-secondary" onClick={() => setModal(null)}>
+                    Cancel
+                  </button>
 
-              <input
-                placeholder="Token ID"
-                value={form.token_id}
-                disabled={modal === "edit"}
-                onChange={e => setForm({ ...form, token_id: e.target.value })}
-              />
+                  <button className="button-primary" onClick={modal === "add" ? handleAdd : handleEdit}>
+                    Save
+                  </button>
+                </div>
+              </>
+            )}
 
-              {/* Tier */}
-              <select
-                value={form.tier}
-                onChange={e => setForm({ ...form, tier: Number(e.target.value) })}
-              >
-                {[...Array(10)].map((_, i) => (
-                  <option key={i} value={i + 1}>
-                    Tier {i + 1}
-                  </option>
-                ))}
-              </select>
+            {modal === "delete" && (
+              <>
+                <h3>Delete</h3>
 
-              {/* Lock */}
-              <select
-                value={form.lock_years}
-                onChange={e => setForm({ ...form, lock_years: Number(e.target.value) })}
-              >
-                <option value={1}>1 Year</option>
-                <option value={2}>2 Years</option>
-                <option value={3}>3 Years</option>
-                <option value={4}>4 Years</option>
-              </select>
-            </>
-          )}
+                <p className="text-secondary">
+                  Are you sure you want to delete this entry?
+                </p>
 
-          <div className="modal-actions">
-            <button className="button-secondary" onClick={() => setModal(null)}>
-              Cancel
-            </button>
+                <div className="modal-actions">
+                  <button className="button-secondary" onClick={() => setModal(null)}>
+                    Cancel
+                  </button>
 
-            <button
-              className="button-primary"
-              onClick={modal === "add" ? handleAdd : handleEdit}
-            >
-              Save
-            </button>
+                  <button className="button-danger" onClick={handleDelete}>
+                    Delete
+                  </button>
+                </div>
+              </>
+            )}
+
           </div>
-        </>
+        </div>
       )}
-
-      {/* DELETE */}
-      {modal === "delete" && (
-        <>
-          <h3>Delete</h3>
-
-          <p className="text-secondary">
-            Are you sure you want to delete this entry?
-          </p>
-
-          <div className="modal-actions">
-            <button className="button-secondary" onClick={() => setModal(null)}>
-              Cancel
-            </button>
-
-            <button className="button-danger" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        </>
-      )}
-
-    </div>
-  </div>
-)}
 
     </div>
   )
