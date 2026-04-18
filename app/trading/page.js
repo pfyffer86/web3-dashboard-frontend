@@ -125,7 +125,7 @@ export default function TradingPage() {
 
                   <td>
                     <div className="asset-icon">
-                      {n.token?.symbol || <IconRobot size={16} />}
+                      <IconRobot size={16} />
                     </div>
                   </td>
 
@@ -134,7 +134,7 @@ export default function TradingPage() {
                   <td>{n.label}</td>
 
                   <td>
-                    {formatNumber(n.value)} {n.token?.symbol || ""}
+                    {formatNumber(n.value)}
                   </td>
 
                   <td>
