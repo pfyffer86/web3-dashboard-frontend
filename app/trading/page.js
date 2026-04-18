@@ -49,7 +49,7 @@ export default function TradingPage() {
 
   /* ================= KPI ================= */
 
-  const totalValue = data.reduce((sum, n) => sum + (n.value || 0), 0)
+  const totalValue = data.reduce((sum, n) => sum + (n.value_usd || 0), 0)
   const totalBots = data.length
 
   return (
@@ -109,7 +109,7 @@ export default function TradingPage() {
               <th>ASSET</th>
               <th>ID</th>
               <th>LABEL</th>
-              <th>wUSDT IN VAULT (uncompounded)</th>
+              <th>VAULT</th>
               <th>STATUS</th>
             </tr>
           </thead>
@@ -125,7 +125,7 @@ export default function TradingPage() {
 
                   <td>
                     <div className="asset-icon">
-                      <IconRobot size={16} />
+                      {n.token?.symbol || <IconRobot size={16} />}
                     </div>
                   </td>
 
@@ -133,7 +133,9 @@ export default function TradingPage() {
 
                   <td>{n.label}</td>
 
-                  <td>{formatNumber(n.value)}</td>
+                  <td>
+                    {formatNumber(n.value)} {n.token?.symbol || ""}
+                  </td>
 
                   <td>
                     <div
@@ -167,7 +169,7 @@ function formatNumber(v) {
 
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 4
   }).format(v)
 }
 
