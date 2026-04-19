@@ -104,63 +104,86 @@ export default function TradingPage() {
 
         <table className="table">
 
-  <thead>
-    <tr>
-      <th>ASSET</th>
-      <th>ID</th>
-      <th>LABEL</th>
-      <th></th> {/* 🔥 Token Icon Column */}
-      <th>VAULT</th>
-      <th>STATUS</th>
-    </tr>
-  </thead>
+          <thead>
+            <tr>
+              <th>ASSET</th>
+              <th>ID</th>
+              <th>LABEL</th>
+              <th></th>
+              <th>VAULT</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
 
-  <tbody>
+          <tbody>
 
-    {data.map(n => {
+            {data.map(n => {
 
-      const isLoaded = (n.value || 0) > 0
+              const isLoaded = (n.value || 0) > 0
 
-      return (
-        <tr key={n.token_id}>
+              return (
+                <tr key={n.token_id}>
 
-          <td>
-            <div className="asset-icon">
-              <IconRobot size={16} />
-            </div>
-          </td>
+                  <td>
+                    <div className="asset-icon">
+                      <IconRobot size={16} />
+                    </div>
+                  </td>
 
-          <td>#{n.token_id}</td>
+                  <td>#{n.token_id}</td>
 
-          <td>{n.label}</td>
+                  <td>{n.label}</td>
 
-          {/* 🔥 TOKEN SYMBOL */}
-          <td style={{ width: "80px", opacity: 0.7 }}>
-            {n.token?.symbol || "-"}
-          </td>
+                  {/* 🔥 TOKEN ICON FIX (CSS-kompatibel) */}
+                  <td style={{ width: "60px" }}>
+                    <div className="token-icon">
 
-          <td>
-            {formatNumber(n.value)}
-          </td>
+                      {n.token?.symbol ? (
+                        <>
+                          <img
+                            src={`/tokens/${n.token.symbol}.png`}
+                            alt={n.token.symbol}
+                            onError={(e) => {
+                              e.target.style.display = "none"
+                              const fallback = e.target.nextSibling
+                              if (fallback) fallback.style.display = "flex"
+                            }}
+                          />
+                          <div className="token-fallback">
+                            {n.token.symbol.slice(0, 3)}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="token-fallback" style={{ display: "flex" }}>
+                          ?
+                        </div>
+                      )}
 
-          <td>
-            <div
-              className="vault-status"
-              style={{
-                background: isLoaded ? "var(--green)" : "var(--red)"
-              }}
-            >
-              {isLoaded ? "Vault Loaded" : "Vault Unloaded"}
-            </div>
-          </td>
+                    </div>
+                  </td>
 
-        </tr>
-      )
-    })}
+                  <td>
+                    {formatNumber(n.value)}
+                  </td>
 
-  </tbody>
+                  <td>
+                    <div
+                      className="vault-status"
+                      style={{
+                        background: isLoaded ? "var(--green)" : "var(--red)"
+                      }}
+                    >
+                      {isLoaded ? "Vault Loaded" : "Vault Unloaded"}
+                    </div>
+                  </td>
 
-</table>
+                </tr>
+              )
+            })}
+
+          </tbody>
+
+        </table>
 
       </div>
 
