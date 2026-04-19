@@ -91,7 +91,7 @@ export default function TradingPage() {
         {/* KPI 2 */}
         <div className="card kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Loaded Bots</div>
+            <div className="kpi-label">Loaded</div>
             <IconRobot size={18} className="kpi-icon" />
           </div>
 
@@ -100,14 +100,14 @@ export default function TradingPage() {
           </div>
 
           <div className="kpi-sub">
-            With loaded vault
+            Tradebots With loaded vault
           </div>
         </div>
 
         {/* KPI 3 */}
         <div className="card kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Unloaded Bots</div>
+            <div className="kpi-label">Unloaded</div>
             <IconRobot size={18} className="kpi-icon" />
           </div>
 
@@ -116,7 +116,7 @@ export default function TradingPage() {
           </div>
 
           <div className="kpi-sub">
-            With unloaded vault
+            Tradebots With unloaded vault
           </div>
         </div>
 
