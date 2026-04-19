@@ -35,7 +35,7 @@ export default function TradingPage() {
 
       const json = await res.json()
 
-      console.log("TRADING DATA:", json) // 🔥 DEBUG
+      console.log("TRADING DATA:", json)
 
       setData(Array.isArray(json.positions) ? json.positions : [])
 
@@ -135,17 +135,20 @@ export default function TradingPage() {
 
                   <td>{n.label}</td>
 
-                  <td style={{ width: "60px" }}>
-                    <div className="token-icon">
+                  {/* 🔥 FIXED ICON STRUCTURE */}
+                  <td style={{ width: "80px" }}>
+                    <div className="token">
+                      <div className="token-icon">
 
-                      {icon ? (
-                        <img src={icon} />
-                      ) : (
-                        <div className="token-fallback" style={{ display: "flex" }}>
-                          {n.token?.symbol?.[0] || "?"}
-                        </div>
-                      )}
+                        {icon ? (
+                          <img src={icon} />
+                        ) : (
+                          <div className="token-fallback">
+                            {n.token?.symbol?.[0] || "?"}
+                          </div>
+                        )}
 
+                      </div>
                     </div>
                   </td>
 
