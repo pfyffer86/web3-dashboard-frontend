@@ -1322,3 +1322,33 @@ VAULT STATUS BADGE
 
   min-width: 110px;
 }
+
+.donut-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.donut-chart {
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.3));
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
