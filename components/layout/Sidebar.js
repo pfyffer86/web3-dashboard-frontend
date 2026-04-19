@@ -73,7 +73,7 @@ export default function Sidebar() {
 
       <Link href="/assets" className={isActive("/assets") ? "active" : ""}>
         <IconCoins size={18} />
-        <span>Assets</span>
+        <span>Tokens</span>
       </Link>
 
       <Link href="/staking" className={isActive("/staking") ? "active" : ""}>
