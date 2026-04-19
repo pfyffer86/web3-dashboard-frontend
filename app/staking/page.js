@@ -128,10 +128,10 @@ export default function StakingPage() {
               <th>ID</th>
               <th>LABEL</th> {/* 🔥 NEU */}
               <th>TIER</th>
-              <th>STAKED APTM</th>
-              <th>MAX STAKE APTM</th>
-              <th>UTILIZATION</th>
               <th>DURATION</th>
+              <th>STAKED</th>
+              <th>MAX STAKING</th>
+              <th>UTILIZATION</th>
               <th>ELAPSED</th>
             </tr>
           </thead>
