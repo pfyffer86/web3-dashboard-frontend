@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabase"
 import { IconPigMoney, IconRobot } from "@tabler/icons-react"
 
+/* ICON */
 function getTokenIcon(cmc_id) {
   if (!cmc_id) return null
   return `https://s2.coinmarketcap.com/static/img/coins/64x64/${cmc_id}.png`
@@ -57,6 +58,9 @@ export default function TradingPage() {
   const totalValue = data.reduce((sum, n) => sum + (n.value_usd || 0), 0)
   const totalBots = data.length
 
+  /* 🔥 FIXED APTM ICON */
+  const APTM_CMC_ID = 36838 // aus deiner tokens table
+
   return (
     <div>
 
@@ -109,7 +113,7 @@ export default function TradingPage() {
               <th>ASSET</th>
               <th>ID</th>
               <th>LABEL</th>
-              <th></th>
+              <th>TRADING PAIR</th> {/* 🔥 geändert */}
               <th>VAULT</th>
               <th>STATUS</th>
             </tr>
@@ -120,7 +124,9 @@ export default function TradingPage() {
             {data.map(n => {
 
               const isLoaded = (n.value || 0) > 0
-              const icon = getTokenIcon(n.token?.cmc_id)
+
+              const baseIcon = getTokenIcon(APTM_CMC_ID)
+              const quoteIcon = getTokenIcon(n.token?.cmc_id)
 
               return (
                 <tr key={n.token_id}>
@@ -135,20 +141,33 @@ export default function TradingPage() {
 
                   <td>{n.label}</td>
 
-                  {/* 🔥 FIXED ICON STRUCTURE */}
-                  <td style={{ width: "80px" }}>
-                    <div className="token">
-                      <div className="token-icon">
+                  {/* 🔥 TRADING PAIR */}
+                  <td style={{ width: "120px" }}>
+                    <div className="token" style={{ display: "flex", gap: "6px", alignItems: "center" }}>
 
-                        {icon ? (
-                          <img src={icon} />
+                      {/* APTM */}
+                      <div className="token-icon">
+                        {baseIcon ? (
+                          <img src={baseIcon} />
+                        ) : (
+                          <div className="token-fallback">A</div>
+                        )}
+                      </div>
+
+                      {/* Separator optional */}
+                      <span style={{ fontSize: "10px", opacity: 0.5 }}>/</span>
+
+                      {/* Bot Token */}
+                      <div className="token-icon">
+                        {quoteIcon ? (
+                          <img src={quoteIcon} />
                         ) : (
                           <div className="token-fallback">
                             {n.token?.symbol?.[0] || "?"}
                           </div>
                         )}
-
                       </div>
+
                     </div>
                   </td>
 
