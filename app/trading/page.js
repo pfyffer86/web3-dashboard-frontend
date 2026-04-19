@@ -104,57 +104,63 @@ export default function TradingPage() {
 
         <table className="table">
 
-          <thead>
-            <tr>
-              <th>ASSET</th>
-              <th>ID</th>
-              <th>LABEL</th>
-              <th>VAULT</th>
-              <th>STATUS</th>
-            </tr>
-          </thead>
+  <thead>
+    <tr>
+      <th>ASSET</th>
+      <th>ID</th>
+      <th>LABEL</th>
+      <th></th> {/* 🔥 Token Icon Column */}
+      <th>VAULT</th>
+      <th>STATUS</th>
+    </tr>
+  </thead>
 
-          <tbody>
+  <tbody>
 
-            {data.map(n => {
+    {data.map(n => {
 
-              const isLoaded = (n.value || 0) > 0
+      const isLoaded = (n.value || 0) > 0
 
-              return (
-                <tr key={n.token_id}>
+      return (
+        <tr key={n.token_id}>
 
-                  <td>
-                    <div className="asset-icon">
-                      <IconRobot size={16} />
-                    </div>
-                  </td>
+          <td>
+            <div className="asset-icon">
+              <IconRobot size={16} />
+            </div>
+          </td>
 
-                  <td>#{n.token_id}</td>
+          <td>#{n.token_id}</td>
 
-                  <td>{n.label}</td>
+          <td>{n.label}</td>
 
-                  <td>
-                    {formatNumber(n.value)}
-                  </td>
+          {/* 🔥 TOKEN SYMBOL */}
+          <td style={{ width: "80px", opacity: 0.7 }}>
+            {n.token?.symbol || "-"}
+          </td>
 
-                  <td>
-                    <div
-                      className="vault-status"
-                      style={{
-                        background: isLoaded ? "var(--green)" : "var(--red)"
-                      }}
-                    >
-                      {isLoaded ? "Vault Loaded" : "Vault Unloaded"}
-                    </div>
-                  </td>
+          <td>
+            {formatNumber(n.value)}
+          </td>
 
-                </tr>
-              )
-            })}
+          <td>
+            <div
+              className="vault-status"
+              style={{
+                background: isLoaded ? "var(--green)" : "var(--red)"
+              }}
+            >
+              {isLoaded ? "Vault Loaded" : "Vault Unloaded"}
+            </div>
+          </td>
 
-          </tbody>
+        </tr>
+      )
+    })}
 
-        </table>
+  </tbody>
+
+</table>
 
       </div>
 
