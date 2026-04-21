@@ -69,12 +69,14 @@ export default function LoginPage() {
   async function handleReset(e) {
     e.preventDefault()
 
+    if (!email) return
+
     setLoading(true)
     setError("")
     setMessage("")
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin
+      redirectTo: `${window.location.origin}/update-password` // 🔥 FIX
     })
 
     if (error) {
